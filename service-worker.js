@@ -1,5 +1,5 @@
 /* Cache offline: nessuna rete esterna richiesta per giocare. */
-const CACHE='6-sudoku-v04';
+const CACHE='6-sudoku-v05';
 const ASSETS=['./','./index.html','./manifest.webmanifest','./assets/style.css','./assets/icon-192.png','./assets/icon-512.png','./assets/icon-maskable-512.png','./assets/apple-touch-icon.png','./js/sudoku.js','./js/app.js','./js/languages.js'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(names=>Promise.all(names.filter(name=>name!==CACHE).map(name=>caches.delete(name)))).then(()=>self.clients.claim())));

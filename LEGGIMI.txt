@@ -71,3 +71,5 @@ VERSIONE 0.4 – MULTILINGUA E GUIDA
 - Messaggi di invito alla sfida tradotti nella lingua selezionata.
 - Per aggiornare GitHub: caricare tutti i file estratti, mantenendo le cartelle assets/ e js/.
 - Aggiornamento del service worker alla cache v04.
+
+VERSIONE 0.5: icona ufficiale della PWA nella testata, senza nuove risorse grafiche.
