@@ -1,0 +1,64 @@
+6 Sudoku – Versione 0.3
+
+NOVITÀ
+- Icona personalizzata per PWA, Android e iPhone (192, 512, maskable, Apple 180).
+- Pulsante Installa nella Home, con icona visibile.
+- Installazione nativa su browser compatibili quando disponibile.
+- Guida manuale per iPhone e browser non compatibili.
+- Pulsante di installazione anche nella schermata finale.
+- Il pulsante non compare quando l'app è aperta in modalità installata.
+- Gioco, difficoltà, sfide condivise e statistiche della 0.2 rimangono invariati.
+
+ATTENZIONE
+L'installazione richiede che il sito sia servito su HTTPS (ad es. GitHub Pages), non aperto come file locale.
+Su iPhone la procedura di installazione parte dal menu di condivisione del browser; il pulsante mostra come fare.
+Non si può installare senza un'azione esplicita dell'utente.
+
+PUBBLICAZIONE
+Carica direttamente tutti i file e le cartelle contenuti in questo ZIP nella radice del repository GitHub Pages.
+Se hai già la versione 0.2, sostituisci tutti i file con questi per evitare cache e icone vecchie.
+
+6 SUDOKU — PROTOTIPO 0.2
+=========================
+
+NOVITÀ
+- Griglia corretta: 6 colonne x 6 righe in 6 rettangoli 2x3.
+- Generatore locale con soluzione unica, verificato automaticamente.
+- Schermata finale con tempo grande e pulsanti di condivisione.
+- Sfida un amico: il link contiene ID dello schema, livello e tempo da battere.
+- Collegamento con lo stesso schema senza account e senza database.
+- Sezione statistiche e lingua italiana/inglese.
+- Predisposizione PWA e installazione Android/iPhone.
+
+PROVA SUL COMPUTER
+1. Estrai lo ZIP, lasciando le cartelle assets e js al loro posto.
+2. Apri index.html con Chrome o altro browser moderno.
+3. Gioca liberamente. La grafica, la generazione e il confronto funzionano localmente.
+4. IMPORTANTE: la condivisione di una sfida via link, la vera installazione PWA
+   e il Service Worker richiedono una pagina pubblicata con HTTPS (per esempio GitHub Pages).
+
+PUBBLICAZIONE SU GITHUB PAGES
+1. Crea un repository GitHub, per esempio 6-sudoku.
+2. Carica NELLA RADICE del repository il contenuto di questa cartella
+   (index.html, manifest.webmanifest, service-worker.js, assets/, js/).
+3. In Settings > Pages seleziona Deploy from a branch, branch main, folder /(root).
+4. Apri l'indirizzo HTTPS mostrato da GitHub Pages.
+5. Da quel link la condivisione sfida invia schema identico + tempo da battere.
+
+INSTALLAZIONE
+- Su Android con browser che supporta l'installazione: compare il comando Installa.
+- Su iPhone: Condividi > Aggiungi alla schermata Home > Apri come app (se disponibile).
+- Un link non può forzare l'installazione; serve sempre l'autorizzazione dell'utente.
+- Un link verso una PWA installata può aprire direttamente l'app in alcuni browser Android.
+  Su iPhone può aprirsi nel browser anche se la PWA è già installata.
+
+NOTE SU QUESTA VERSIONE
+- I tre livelli usano un diverso numero di caselle nascoste, ciascuno con soluzione unica;
+  una valutazione avanzata della difficoltà logica richiederà una successiva fase.
+- I suggerimenti comportano una penalità di 30 secondi nel tempo condiviso.
+- La sfida condivisa è amichevole: senza server i tempi non sono verificabili contro manomissioni.
+- Nessuna API AI o pubblicità attiva: verranno valutate in una versione successiva.
+- I risultati restano nel dispositivo dove sono stati giocati.
+- La data della sfida quotidiana usa UTC, per avere lo stesso schema in tutto il mondo.
+
+PROGETTO leggero: nessun framework, nessuna risorsa remota.
