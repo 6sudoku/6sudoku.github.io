@@ -14,13 +14,18 @@
  <link rel="stylesheet" href="assets/style.css">
  <title>6 Sudoku — Sei pronto?</title>
  <script src="js/sudoku.js" defer></script>
+ <script src="js/languages.js" defer></script>
  <script src="js/app.js" defer></script>
 </head>
 <body>
 <div class="app-shell">
  <header class="app-header">
   <div class="logo-wrap"><span class="app-logo">6</span><span><strong>6 SUDOKU</strong><small>PLAY · THINK · ENJOY</small></span></div>
-  <button id="language" class="lang" aria-label="Lingua">IT ▾</button>
+  <label class="lang-picker" aria-label="Lingua / Language"><select id="language" class="lang" aria-label="Lingua / Language">
+<option value="it">🇮🇹 Italiano</option><option value="en">🇬🇧 English</option>
+<option value="de">🇩🇪 Deutsch</option><option value="fr">🇫🇷 Français</option>
+<option value="zh">🇨🇳 中文</option><option value="ru">🇷🇺 Русский</option>
+</select></label>
  </header>
  <main>
   <section id="homeScreen" class="screen">
@@ -41,7 +46,7 @@
     <div class="install-copy"><strong data-text="installTitle">Installa 6 Sudoku</strong><p id="installInstructions"></p></div>
     <button id="installNow" class="install-action" data-text="install">Installa</button>
    </div>
-   <div class="home-links"><button class="quiet" id="openStats" data-text="stats">Le mie statistiche</button><button class="quiet" id="shareApp" data-text="shareApp">Condividi l'app</button></div>
+   <div class="home-links"><button class="quiet" id="openRules" data-text="howTo">Come si gioca?</button><button class="quiet" id="openStats" data-text="stats">Le mie statistiche</button><button class="quiet" id="shareApp" data-text="shareApp">Condividi l'app</button></div>
   </section>
   <section id="gameScreen" class="screen" hidden>
    <div class="game-nav"><button class="quiet back" id="backHome">← <span data-text="home">Home</span></button><span class="clock" id="clock">00:00</span></div>
@@ -49,7 +54,7 @@
    <div id="targetBar" class="target-bar" hidden>🏁 <span id="targetText"></span></div>
    <div class="game-board-frame"><div class="sudoku-grid" id="sudokuGrid" role="grid" aria-label="Sudoku 6x6"></div></div>
    <div class="number-pad" id="numberPad"><button data-digit="1">1</button><button data-digit="2">2</button><button data-digit="3">3</button><button data-digit="4">4</button><button data-digit="5">5</button><button data-digit="6">6</button></div>
-   <div class="tool-row"><button class="quiet" id="erase">⌫ <span data-text="erase">Cancella</span></button><button class="quiet" id="hint">✦ <span data-text="hint">Suggerimento</span></button><button class="quiet" id="sharePuzzle">↗ <span data-text="share">Condividi</span></button></div>
+   <div class="tool-row"><button class="quiet" id="gameRules" data-text="howTo">Come si gioca?</button><button class="quiet" id="erase">⌫ <span data-text="erase">Cancella</span></button><button class="quiet" id="hint">✦ <span data-text="hint">Suggerimento</span></button><button class="quiet" id="sharePuzzle">↗ <span data-text="share">Condividi</span></button></div>
    <p class="game-feedback" id="feedback" aria-live="polite"></p>
   </section>
   <section id="statsScreen" class="screen" hidden><div class="game-nav"><button class="quiet back" id="statsBack">← <span data-text="home">Home</span></button></div><div class="hello"><span class="kicker" data-text="statsKicker">IL TUO PERCORSO</span><h1 data-text="stats">Le mie statistiche</h1><p data-text="statsDesc">Un passo alla volta, una griglia alla volta.</p></div><div class="stats-grid"><div><strong id="statWins">0</strong><span data-text="wins">Schemi completati</span></div><div><strong id="statToday">0</strong><span data-text="today">Completati oggi</span></div><div><strong id="statBest">—</strong><span data-text="best">Miglior tempo</span></div></div></section>
@@ -58,6 +63,11 @@
 </div>
 <dialog id="winDialog" class="win-dialog">
  <div class="win-inner"><div class="win-symbol">✦</div><span class="kicker" data-text="finished">SFIDA COMPLETATA</span><h2 data-text="congrats">Complimenti!</h2><p data-text="winSubtitle">Hai completato il tuo 6 Sudoku.</p><div class="result-time" id="resultTime">01:41</div><div class="result-meta" id="resultMeta"></div><div class="challenge-result" id="challengeResult" hidden></div><button class="primary" id="challengeFriend" data-text="challengeFriend">🏁 Sfida un amico</button><div class="win-bottom"><button class="secondary" id="newGame" data-text="newGame">Nuova partita</button><button class="secondary" id="goHome" data-text="home">Home</button></div><button class="whatsapp-button" id="whatsapp" data-text="whatsapp">Invia su WhatsApp</button><button class="quiet win-install" id="winInstall" data-text="installWin">⬇ Installa l’app</button></div>
+</dialog>
+<dialog id="rulesDialog" class="tip-dialog rules-dialog" aria-labelledby="rulesTitle">
+ <div><h2 id="rulesTitle" data-text="howToTitle">Come si gioca a 6 Sudoku?</h2>
+ <div id="rulesContent" class="rules-content"></div>
+ <button id="rulesClose" class="primary" data-text="understood">Ho capito</button></div>
 </dialog>
 <dialog id="installDialog" class="tip-dialog"><div><h2 data-text="installHelp">Installa 6 Sudoku</h2><p id="manualHelp"></p><button id="tipClose" class="primary" data-text="understood">Ho capito</button></div></dialog>
 <dialog id="shareDialog" class="tip-dialog"><div><h2 data-text="shareTitle">Condividi la sfida</h2><p data-text="shareDesc">Scegli come inviare il link.</p><button class="primary" id="shareNative" data-text="shareMenu">Condividi con...</button><button class="secondary" id="shareWa" data-text="whatsapp">Invia su WhatsApp</button><button class="secondary" id="shareCopy" data-text="copy">Copia il link</button><button class="quiet" id="shareClose" data-text="close">Chiudi</button></div></dialog>

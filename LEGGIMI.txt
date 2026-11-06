@@ -62,3 +62,12 @@ NOTE SU QUESTA VERSIONE
 - La data della sfida quotidiana usa UTC, per avere lo stesso schema in tutto il mondo.
 
 PROGETTO leggero: nessun framework, nessuna risorsa remota.
+
+
+VERSIONE 0.4 – MULTILINGUA E GUIDA
+- Scelta lingua: italiano, inglese, tedesco, francese, cinese (semplificato), russo.
+- La lingua viene conservata in localStorage e ripristinata al prossimo avvio.
+- Pulsante "Come si gioca?" sulla Home e nella partita, con istruzioni complete in tutte le lingue.
+- Messaggi di invito alla sfida tradotti nella lingua selezionata.
+- Per aggiornare GitHub: caricare tutti i file estratti, mantenendo le cartelle assets/ e js/.
+- Aggiornamento del service worker alla cache v04.

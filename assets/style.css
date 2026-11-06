@@ -21,3 +21,14 @@ footer{text-align:center;font-size:9px;color:#9aa69b;letter-spacing:.06em;paddin
 .install-action{min-width:76px;min-height:43px;padding:10px 12px;border-radius:10px;font-size:12px}
 .win-install{margin-top:3px;display:block;width:100%;min-height:40px}
 @media(max-width:360px){.install-card{padding:9px;gap:8px}.install-icon{width:36px;height:36px;flex-basis:36px}.install-action{min-width:69px;padding:9px}}
+
+/* 0.4 – Scelta lingua e guida integrata, senza librerie aggiuntive */
+.lang-picker{display:inline-flex;max-width:155px}
+.lang{max-width:155px;min-height:39px;font-size:12px;padding:8px 6px;appearance:auto}
+.home-links{flex-wrap:wrap;gap:3px 8px}
+.rules-dialog>div{max-height:80dvh;overflow-y:auto}
+.rules-content{display:grid;gap:12px}
+.rules-content section{border:1px solid var(--line);border-radius:12px;background:#fafcf9;padding:12px}
+.rules-content h3{font-size:13px;color:var(--green);margin:0 0 5px}
+.rules-content p{font-size:12px;line-height:1.55;color:#58675b;margin:0;white-space:normal}
+@media(max-width:380px){.tool-row{flex-wrap:wrap}.tool-row button{font-size:10.5px}}

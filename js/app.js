@@ -1,4 +1,4 @@
-/* 6 Sudoku 0.3 — interfaccia touch e sfide senza server. */
+/* 6 Sudoku 0.4 — interfaccia touch e sfide senza server. */
 (() => {
 'use strict';
 const $=q=>document.querySelector(q), $$=q=>Array.from(document.querySelectorAll(q));
@@ -6,7 +6,11 @@ const T={
  it:{kicker:'IL TUO PICCOLO GRANDE GIOCO',ready:'Sei pronto?',intro:'Sei numeri, infinite piccole sfide. Un momento tutto per te.',difficulty:'SCEGLI LA DIFFICOLTÀ',beginner:'Principiante',beginnerDesc:'Per iniziare con calma',intermediate:'Intermedio',intermediateDesc:'Un po’ più di ragionamento',advanced:'Avanzato',advancedDesc:'Mettiti alla prova',play:'Inizia una partita',daily:'Sfida quotidiana',stats:'Le mie statistiche',shareApp:"Condividi l'app",received:'Hai ricevuto una sfida!',installTitle:'Installa 6 Sudoku',install:'Installa',installWin:'⬇ Installa l’app',localInstall:'Per installarla, apri la versione pubblicata su GitHub Pages (HTTPS). Qui stai provando i file locali.',installed:'App installata!',standaloneHint:'Puoi aprirla direttamente dalla schermata Home.',home:'Home',instructions:'Ogni riga, colonna e rettangolo contiene i numeri da 1 a 6.',erase:'Cancella',hint:'Suggerimento',share:'Condividi',statsKicker:'IL TUO PERCORSO',statsDesc:'Un passo alla volta, una griglia alla volta.',wins:'Schemi completati',today:'Completati oggi',best:'Miglior tempo',finished:'SFIDA COMPLETATA',congrats:'Complimenti!',winSubtitle:'Hai completato il tuo 6 Sudoku.',challengeFriend:'🏁 Sfida un amico',newGame:'Nuova partita',whatsapp:'Invia su WhatsApp',installHelp:'Installa 6 Sudoku',understood:'Ho capito',shareTitle:'Condividi la sfida',shareDesc:'Scegli come inviare il link.',shareMenu:'Condividi con...',copy:'Copia il link',close:'Chiudi',footer:'UN PICCOLO GRANDE GIOCO DI LOGICA',challengeTarget:'Tempo da battere',dailyTitle:'Sfida quotidiana',wrong:'Questo numero non è corretto. Riprova!',selected:'Seleziona prima una casella vuota.',fixed:'Questa casella non si può modificare.',hintFeedback:'Un piccolo aiuto! +30 secondi al punteggio.',hintPenalty:'Penalità suggerimenti',beat:'Hai battuto il tempo! 🎉',lost:'Non hai battuto il tempo. Riprova! ✨',equal:'Pareggio perfetto! 🤝',noWeb:'Per inviare una sfida agli amici, pubblica prima la PWA su GitHub Pages (HTTPS).',linkCopied:'Link copiato! Invialo a un amico.',copyFailed:'Non posso copiare automaticamente. Copia il link dalla barra del browser.',invite:'Accetta la sfida',noticeInstall:'Installa l’app per giocare più comodamente.',iosHelp:'Su iPhone: apri questa pagina in Safari, tocca Condividi e scegli “Aggiungi alla schermata Home”, quindi conferma.',androidHelp:'Su Android: apri il menu del browser (⋮), poi scegli “Installa app” o “Aggiungi a schermata Home”.',genericHelp:'Apri il menu del browser e cerca “Installa app” o “Aggiungi alla schermata Home”.',minutes:'tempo',hints:'suggerimenti',you:'Il tuo tempo'},
  en:{kicker:'YOUR LITTLE BIG GAME',ready:'Ready to play?',intro:'Six numbers and endless little challenges. A moment just for you.',difficulty:'CHOOSE YOUR LEVEL',beginner:'Beginner',beginnerDesc:'A gentle start',intermediate:'Intermediate',intermediateDesc:'A little more thinking',advanced:'Advanced',advancedDesc:'Challenge yourself',play:'Start a game',daily:'Daily challenge',stats:'My statistics',shareApp:'Share this app',received:"You've received a challenge!",installTitle:'Install 6 Sudoku',install:'Install',installWin:'⬇ Install the app',localInstall:'To install, open the version hosted on GitHub Pages (HTTPS). Local files are only for testing.',installed:'App installed!',standaloneHint:'You can launch it from your Home screen.',home:'Home',instructions:'Use numbers 1 to 6 once per row, column, and rectangle.',erase:'Erase',hint:'Hint',share:'Share',statsKicker:'YOUR PROGRESS',statsDesc:'One grid at a time.',wins:'Completed puzzles',today:'Completed today',best:'Best time',finished:'CHALLENGE COMPLETED',congrats:'Well done!',winSubtitle:"You've completed your 6 Sudoku.",challengeFriend:'🏁 Challenge a friend',newGame:'New game',whatsapp:'Send on WhatsApp',installHelp:'Install 6 Sudoku',understood:'Got it',shareTitle:'Share your challenge',shareDesc:'Choose how to send the link.',shareMenu:'Share with...',copy:'Copy link',close:'Close',footer:'A LITTLE BIG LOGIC GAME',challengeTarget:'Time to beat',dailyTitle:'Daily challenge',wrong:'That number is not correct. Try again!',selected:'Select an empty cell first.',fixed:'This is a fixed cell.',hintFeedback:'A little help! +30 seconds on your score.',hintPenalty:'Hint penalty',beat:'You beat the time! 🎉',lost:"You didn't beat the time. Try again! ✨",equal:'A perfect tie! 🤝',noWeb:'To send a challenge, first publish the PWA on GitHub Pages (HTTPS).',linkCopied:'Link copied! Send it to a friend.',copyFailed:'Could not copy automatically. Copy the link from your browser.',invite:'Accept challenge',noticeInstall:'Install for a better experience.',iosHelp:'On iPhone: open the page in Safari, tap Share, choose “Add to Home Screen”, enable “Open as Web App” if available, and confirm.',androidHelp:'On Android: open your browser menu (⋮) and choose “Install app” or “Add to Home screen”.',genericHelp:'Open your browser menu and find “Install app” or “Add to Home screen”.',minutes:'time',hints:'hints',you:'Your time'}
 };
-const defaults={lang:(navigator.language||'it').toLowerCase().startsWith('it')?'it':'en',level:'beginner'};
+Object.assign(T.it,{howTo:'Come si gioca?',howToTitle:'Come si gioca a 6 Sudoku?',shareChallengeDone:'🧩 Ti sfido a 6 Sudoku!\\nHo completato il livello {level} in {time} ⏱️{hints}\\nPensi di riuscire a battermi? Gioca lo stesso schema!\\n{url}',shareChallengeOpen:'🧩 Giochiamo allo stesso 6 Sudoku! Riesci a battermi?\\n{url}',shareAppMessage:'🧩 Prova 6 Sudoku, un piccolo grande gioco di logica!\\n{url}',hintsShare:' ({count} aiuti inclusi nel punteggio)'});
+Object.assign(T.en,{howTo:'How to play',howToTitle:'How to play 6 Sudoku',shareChallengeDone:'🧩 I challenge you to 6 Sudoku!\\nI solved {level} in {time} ⏱️{hints}\\nCan you beat my time? Play the exact same puzzle!\\n{url}',shareChallengeOpen:'🧩 Let’s play the same 6 Sudoku! Can you beat me?\\n{url}',shareAppMessage:'🧩 Try 6 Sudoku, a little big logic game!\\n{url}',hintsShare:' ({count} hints included in the score)'});
+Object.assign(T,window.SudokuLanguages||{});
+const detectLanguage=()=>{const l=(navigator.language||'it').toLowerCase();return ['it','en','de','fr','zh','ru'].find(k=>l.startsWith(k))||'en';};
+const defaults={lang:detectLanguage(),level:'beginner'};
 let lang=localStorage.getItem('6sudoku-lang')||defaults.lang,level=localStorage.getItem('6sudoku-level')||defaults.level;
 if(!T[lang])lang='it';if(!['beginner','intermediate','advanced'].includes(level))level='beginner';
 let incoming=null,game=null,selected=-1,elapsed=0,hints=0,startAt=0,timer=null,ended=false,installEvent=null,currentShare=null;
@@ -14,7 +18,7 @@ const params=new URLSearchParams(location.search);
 if(/^[a-zA-Z0-9-]{4,40}$/.test(params.get('c')||'') && ['beginner','intermediate','advanced'].includes(params.get('d'))){const t=Number(params.get('t'));incoming={id:params.get('c'),level:params.get('d'),target:params.has('t')&&Number.isInteger(t)&&t>=1&&t<=86400?t:null};level=incoming.level;}
 function txt(key){return T[lang][key]||key;}
 function format(n){n=Math.max(0,Math.floor(n));return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');}
-function applyLanguage(){document.documentElement.lang=lang;$$('[data-text]').forEach(e=>e.textContent=txt(e.dataset.text));$('#language').textContent=lang.toUpperCase()+' ▾';$$('[data-level]').forEach(e=>{e.classList.toggle('selected',e.dataset.level===level);e.setAttribute('aria-pressed',e.dataset.level===level?'true':'false');});$('#startFree').textContent=incoming?txt('invite'):txt('play');if(incoming){$('#challengeIncoming').hidden=false;$('#incomingTarget').textContent=incoming.target?`${txt('challengeTarget')}: ${format(incoming.target)} · ${txt(level)}`:txt(level);}if(game){$('#gameTitle').textContent=game.daily?txt('dailyTitle'):txt(game.level);updateTarget();}showInstall();}
+function applyLanguage(){document.documentElement.lang=lang;$$('[data-text]').forEach(e=>e.textContent=txt(e.dataset.text));$('#language').value=lang;$$('[data-level]').forEach(e=>{e.classList.toggle('selected',e.dataset.level===level);e.setAttribute('aria-pressed',e.dataset.level===level?'true':'false');});$('#startFree').textContent=incoming?txt('invite'):txt('play');if(incoming){$('#challengeIncoming').hidden=false;$('#incomingTarget').textContent=incoming.target?`${txt('challengeTarget')}: ${format(incoming.target)} · ${txt(level)}`:txt(level);}if(game){$('#gameTitle').textContent=game.daily?txt('dailyTitle'):txt(game.level);updateTarget();}showInstall();if($('#rulesDialog').open)renderRules();}
 function drawDecor(){let vals=[2,0,5,1,0,6,0,4,0,3,2,0,4,1,0,6,0,3,0,6,2,0,5,1,3,0,4,2,0,5,0,5,1,0,6,4];$('#decorBoard').innerHTML=vals.map(n=>`<div class="decor-cell">${n||''}</div>`).join('');}
 function showScreen(which){$$('.screen').forEach(s=>s.hidden=s.id!==which);if(which==='statsScreen')showStats();}
 function updateTarget(){if(!game)return;$('#targetBar').hidden=!game.target;$('#targetText').textContent=game.target?txt('challengeTarget')+': '+format(game.target):'';}
@@ -46,8 +50,16 @@ function checkWin(){if(ended||!game.cells.every((v,i)=>v===game.solution[i]))ret
 function recordScore(total){try{const k='6sudoku-stats';let s=JSON.parse(localStorage.getItem(k)||'{}');let today=new Date().toLocaleDateString('en-CA');s.wins=(Number(s.wins)||0)+1;s.best=s.best===undefined?total:Math.min(s.best,total);s.daily=s.daily&&typeof s.daily==='object'?s.daily:{};s.daily[today]=(Number(s.daily[today])||0)+1;localStorage.setItem(k,JSON.stringify(s));}catch(e){}}
 function showStats(){let s={};try{s=JSON.parse(localStorage.getItem('6sudoku-stats')||'{}');}catch(e){}$('#statWins').textContent=s.wins||0;$('#statToday').textContent=s.daily?.[new Date().toLocaleDateString('en-CA')]||0;$('#statBest').textContent=s.best===undefined?'—':format(s.best);}
 function challengeLink(){const u=new URL('./',location.href);u.search='';u.hash='';if(game){u.searchParams.set('c',game.id);u.searchParams.set('d',game.level);if(ended)u.searchParams.set('t',String(elapsed+hints*30));}return u.href;}
-function buildShare(appOnly=false){if(!appOnly&&game){const url=challengeLink();let message;if(ended){const score=format(elapsed+hints*30);message=lang==='it'?`🧩 Ti sfido a 6 Sudoku!\nHo completato il livello ${txt(game.level)} in ${score} ⏱️${hints?` (${hints} aiuti inclusi nel punteggio)`:''}\nPensi di riuscire a battermi? Gioca lo stesso schema!\n${url}`:`🧩 I challenge you to 6 Sudoku!\nI solved ${txt(game.level)} in ${score} ⏱️\nCan you beat my time? Play the exact same puzzle!\n${url}`;}else{message=lang==='it'?`🧩 Giochiamo allo stesso 6 Sudoku! Riesci a battermi?\n${url}`:`🧩 Let's play the same 6 Sudoku! Can you beat me?\n${url}`;}return {url,message,title:'6 Sudoku — '+txt('challengeFriend').replace('🏁 ','')};}
- const url=new URL('./',location.href).href;return {url,message:(lang==='it'?'🧩 Prova 6 Sudoku, un piccolo grande gioco di logica!':'🧩 Try 6 Sudoku, a little big logic game!')+'\n'+url,title:'6 Sudoku'};}
+function buildShare(appOnly=false){
+ const template=(key,vars)=>txt(key).replace(/\\{(\\w+)\\}/g,(_,k)=>vars[k]??'');
+ if(!appOnly&&game){
+  const url=challengeLink();
+  const message=ended?template('shareChallengeDone',{level:txt(game.level),time:format(elapsed+hints*30),hints:hints?template('hintsShare',{count:hints}):'',url}):template('shareChallengeOpen',{url});
+  return {url,message,title:'6 Sudoku'};
+ }
+ const url=new URL('./',location.href).href;
+ return {url,message:template('shareAppMessage',{url}),title:'6 Sudoku'};
+}
 function canShare(){return location.protocol==='https:'||location.hostname==='localhost';}
 function shareOpen(appOnly=false){if(!canShare()){$('#feedback').textContent=txt('noWeb');if(!game)alert(txt('noWeb'));return;}currentShare=buildShare(appOnly);$('#shareDialog').showModal();}
 async function nativeShare(){if(!currentShare)return;if(navigator.share){try{await navigator.share({title:currentShare.title,text:currentShare.message});$('#shareDialog').close();return;}catch(e){if(e.name==='AbortError')return;}}await copyLink();}
@@ -69,13 +81,26 @@ function openInstallInfo(){
 }
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvent=e;showInstall();});
 window.addEventListener('appinstalled',()=>{installEvent=null;showInstall();});
+function renderRules(){
+ const content=$('#rulesContent');content.replaceChildren();
+ const steps=(window.SudokuRules||{})[lang]||(window.SudokuRules||{}).it||[];
+ steps.forEach(([heading,detail],i)=>{
+  const section=document.createElement('section');
+  const title=document.createElement('h3');title.textContent=(i+1)+'. '+heading;
+  const para=document.createElement('p');para.textContent=detail;
+  section.append(title,para);content.append(section);
+ });
+}
+function openRules(){renderRules();$('#rulesDialog').showModal();}
 function init(){drawDecor();applyLanguage();showScreen('homeScreen');
  $$('#numberPad button').forEach(b=>b.onclick=()=>enter(Number(b.dataset.digit)));
  $$('.level').forEach(b=>b.onclick=()=>{level=b.dataset.level;localStorage.setItem('6sudoku-level',level);incoming=null;$('#challengeIncoming').hidden=true;applyLanguage();});
- $('#language').onclick=()=>{lang=lang==='it'?'en':'it';localStorage.setItem('6sudoku-lang',lang);applyLanguage();};
+ $('#language').onchange=e=>{lang=T[e.target.value]?e.target.value:'it';try{localStorage.setItem('6sudoku-lang',lang);}catch(err){}applyLanguage();};
  $('#startFree').onclick=()=>play(incoming?'incoming':'free');$('#startDaily').onclick=()=>play('daily');
  $('#backHome').onclick=()=>{clearInterval(timer);game=null;showScreen('homeScreen');};
  $('#erase').onclick=()=>enter(0);$('#hint').onclick=help;$('#sharePuzzle').onclick=()=>shareOpen(false);$('#shareApp').onclick=()=>shareOpen(true);
+ $('#openRules').onclick=openRules;$('#gameRules').onclick=openRules;
+ $('#rulesClose').onclick=()=>$('#rulesDialog').close();
  $('#openStats').onclick=()=>showScreen('statsScreen');$('#statsBack').onclick=()=>showScreen('homeScreen');
  $('#challengeFriend').onclick=()=>shareOpen(false);$('#whatsapp').onclick=()=>{if(!canShare()){$('#winDialog').close();alert(txt('noWeb'));return;}currentShare=buildShare(false);whatsApp();};
  $('#newGame').onclick=()=>{$('#winDialog').close();play('free');};$('#goHome').onclick=()=>{$('#winDialog').close();clearInterval(timer);game=null;showScreen('homeScreen');};
