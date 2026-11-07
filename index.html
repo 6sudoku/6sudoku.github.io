@@ -47,7 +47,7 @@
     <div class="install-copy"><strong data-text="installTitle">Installa 6 Sudoku</strong><p id="installInstructions"></p></div>
     <button id="installNow" class="install-action" data-text="install">Installa</button>
    </div>
-   <div class="daily-extra"><button id="openLeaderboard" class="secondary" data-text="leaderboard">🏆 Classifica mondiale (anteprima)</button></div>
+   <div class="ranking-entry"><span class="ranking-entry-icon" aria-hidden="true">🏆</span><div class="ranking-entry-copy"><strong data-text="rankingEntryTitle">Classifica mondiale</strong><small data-text="rankingEntrySubtitle">Sfida quotidiana · Tempi e risultati</small></div><button id="openLeaderboard" class="ranking-entry-button" data-text="rankingEntryAction">Visualizza</button></div>
    <div class="home-links"><button class="quiet" id="openRules" data-text="howTo">Come si gioca?</button><button class="quiet" id="openStats" data-text="stats">Le mie statistiche</button><button class="quiet" id="shareApp" data-text="shareApp">Condividi l'app</button></div>
   </section>
   <section id="gameScreen" class="screen" hidden>
@@ -60,17 +60,21 @@
    <p class="game-feedback" id="feedback" aria-live="polite"></p>
   </section>
   <section id="leaderboardScreen" class="screen" hidden>
-    <div class="game-nav"><button class="quiet back" id="leaderboardBack">← <span data-text="home">Home</span></button></div>
-    <div class="ranking-hero"><div class="ranking-symbol">🏆</div><span class="kicker" data-text="daily">Sfida quotidiana</span><h1 data-text="leaderboard">Classifica mondiale</h1><p id="rankingDay"></p></div>
+    <div class="game-nav"><button class="quiet back" id="leaderboardBack">← <span data-text="home">Home</span></button><span class="ranking-small-mark">6 SUDOKU</span></div>
+    <div class="ranking-hero"><div class="ranking-symbol" aria-hidden="true">🏆</div><span class="kicker" data-text="daily">Sfida quotidiana</span><h1 data-text="leaderboard">Classifica mondiale</h1><p id="rankingDay"></p></div>
     <div class="ranking-tabs" role="group" aria-label="Difficulty"><button data-rank-level="beginner" data-text="beginner">Principiante</button><button data-rank-level="intermediate" data-text="intermediate">Intermedio</button><button data-rank-level="advanced" data-text="advanced">Avanzato</button></div>
-    <div id="rankingRows" class="ranking-rows"></div>
-    <div class="demo-note"><strong data-text="demoTitle">Classifica dimostrativa</strong><p data-text="demoNotice">Non sono ancora disponibili risultati di altri giocatori: il database online non è attivo. I nomi mostrati sono esempi.</p></div>
+    <section class="ranking-board" aria-label="Leaderboard preview">
+      <div class="ranking-board-head"><span data-text="rankPosition">POSIZIONE</span><span data-text="rankPlayer">GIOCATORE</span><span data-text="rankTime">TEMPO</span></div>
+      <div id="rankingRows" class="ranking-rows" aria-live="polite"></div>
+    </section>
+    <section id="rankingPersonal" class="ranking-personal"><span data-text="personalScoreTitle">Il tuo risultato di oggi</span><strong id="rankingPersonalTime">—</strong><small id="rankingPersonalText"></small></section>
+    <div class="demo-note"><div class="demo-note-icon" aria-hidden="true">ⓘ</div><div><strong data-text="demoTitle">Classifica dimostrativa</strong><p data-text="demoNotice">Non sono ancora disponibili risultati di altri giocatori: il database online non è attivo.</p></div></div>
     <button class="primary full-width" id="rankingDaily" data-text="daily">Sfida quotidiana</button>
   </section>
   <section id="statsScreen" class="screen" hidden><div class="game-nav"><button class="quiet back" id="statsBack">← <span data-text="home">Home</span></button></div><div class="hello"><span class="kicker" data-text="statsKicker">IL TUO PERCORSO</span><h1 data-text="stats">Le mie statistiche</h1><p data-text="statsDesc">Un passo alla volta, una griglia alla volta.</p></div><div class="stats-grid"><div><strong id="statWins">0</strong><span data-text="wins">Schemi completati</span></div><div><strong id="statToday">0</strong><span data-text="today">Completati oggi</span></div><div><strong id="statBest">—</strong><span data-text="best">Miglior tempo</span></div></div></section>
  </main>
  <footer class="app-footer">
-  <div>6 SUDOKU <span class="app-version">v0.11</span> · <span data-text="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></div>
+  <div>6 SUDOKU <span class="app-version">v0.11.1</span> · <span data-text="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></div>
   <div class="developer-credit"><span data-text="developerCredit">Ideato e sviluppato da</span> <a href="mailto:ondefx@gmail.com?subject=Info%20per%206sudoku" aria-label="Email dello sviluppatore: ondefx@gmail.com">Alessandro</a></div>
  </footer>
 </div>
@@ -90,7 +94,7 @@
  </div></dialog>
 <dialog id="iphoneGuideDialog" class="tip-dialog enhanced-dialog" aria-labelledby="iphoneHeading"><div>
  <div class="dialog-emblem">📱</div><h2 id="iphoneHeading" data-text="iphoneGuide">Guida illustrata per iPhone</h2>
- <p id="guideStepNum" class="guide-counter"></p><div id="guideVisual" class="guide-visual" aria-hidden="true"></div>
+ <div id="guideProgress" class="guide-progress" aria-hidden="true"></div><p id="guideStepNum" class="guide-counter"></p><div id="guideVisual" class="guide-visual" aria-hidden="true"></div>
  <h3 id="guideStepTitle"></h3><p id="guideStepBody"></p>
  <div class="guide-nav"><button class="secondary" id="guidePrev" data-text="previous">Indietro</button><button class="primary" id="guideNext" data-text="next">Avanti</button></div>
  <button id="guideClose" class="quiet" data-text="close">Chiudi</button>

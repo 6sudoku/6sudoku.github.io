@@ -1,4 +1,4 @@
-/* 6 Sudoku 0.11 — interfaccia touch e sfide senza server. */
+/* 6 Sudoku 0.11.1 — interfaccia touch e sfide senza server. */
 (() => {
 'use strict';
 const $=q=>document.querySelector(q), $$=q=>Array.from(document.querySelectorAll(q));
@@ -30,7 +30,7 @@ function newId(){if(window.crypto&&crypto.getRandomValues){const a=new Uint32Arr
 function play(mode){
  if(mode==='daily'&&!standalone()){openDailyGate();return;}
  if(mode==='daily'&&!getProfile()){askProfile(()=>play('daily'));return;}
- if(mode==='daily'&&readDailyResult(level)){alert(txt('dayPlayed'));showScreen('leaderboardScreen');return;}
+ if(mode==='daily'&&readDailyResult(level)){rankLevel=level;alert(txt('dayPlayed'));showScreen('leaderboardScreen');return;}
  const id=mode==='incoming'&&incoming?incoming.id:mode==='daily'?'D-'+new Date().toISOString().slice(0,10):newId();
  const modeLevel=mode==='incoming'&&incoming?incoming.level:level;
  const puzzle=SudokuEngine.generate(id,modeLevel);
@@ -118,10 +118,48 @@ function saveProfile(){const nick=$('#profileName').value.trim();if(Array.from(n
 function dailyKey(lev){return '6sudoku-daily-'+new Date().toISOString().slice(0,10)+'-'+lev;}
 function saveDailyResult(lev,time){safeSave(dailyKey(lev),{time,id:getPlayerId(),date:new Date().toISOString().slice(0,10),level:lev});}
 function readDailyResult(lev){return safeLoad(dailyKey(lev));}
-function renderLeaderboard(){const date=new Date().toISOString().slice(0,10);$('#rankingDay').textContent=txt('rankDate').replace('{date}',date);$$('[data-rank-level]').forEach(b=>{b.classList.toggle('active',b.dataset.rankLevel===rankLevel);b.setAttribute('aria-pressed',String(b.dataset.rankLevel===rankLevel));});const rows=$('#rankingRows');rows.replaceChildren();const p=getProfile(),r=readDailyResult(rankLevel);if(r&&p&&r.id===p.id){const row=document.createElement('div');row.className='ranking-row own';const name=document.createElement('div');name.className='ranking-name';const strong=document.createElement('strong');strong.textContent=p.nickname+' '+countryFlag(p.country);const self=document.createElement('span');self.className='own-tag';self.textContent='· '+txt('thatsYou');name.append(strong,self);const time=document.createElement('strong');time.className='ranking-time';time.textContent=format(r.time);row.append(name,time);rows.append(row);}else{const empty=document.createElement('p');empty.className='ranking-empty';empty.textContent=txt('noDailyYet');rows.append(empty);}}
+function renderLeaderboard(){
+ const date=new Date().toISOString().slice(0,10);
+ $('#rankingDay').textContent=txt('rankDate').replace('{date}',date);
+ $$('[data-rank-level]').forEach(b=>{b.classList.toggle('active',b.dataset.rankLevel===rankLevel);b.setAttribute('aria-pressed',String(b.dataset.rankLevel===rankLevel));});
+ const rows=$('#rankingRows');rows.replaceChildren();
+ const p=getProfile(),r=readDailyResult(rankLevel);
+ // Without an online database there are no world places to calculate: never fabricate a rank.
+ const empty=document.createElement('div');empty.className='ranking-empty-state';
+ const icon=document.createElement('div');icon.className='ranking-empty-icon';icon.textContent='🌍';
+ const heading=document.createElement('strong');heading.textContent=txt('emptyWorldTitle');
+ const explanation=document.createElement('p');explanation.textContent=txt('emptyWorldBody');
+ empty.append(icon,heading,explanation);rows.append(empty);
+ $('#rankingPersonalTime').textContent=r?format(r.time):'—';
+ const personal=$('#rankingPersonalText');personal.replaceChildren();
+ if(r){
+   const who=document.createElement('strong');who.textContent=(p&&p.id===r.id?p.nickname+' '+countryFlag(p.country):txt('demoPlayer'));
+   const badge=document.createElement('span');badge.className='own-tag';badge.textContent=txt('thatsYou');
+   personal.append(who,document.createTextNode(' · '),badge);
+ }else personal.textContent=txt('personalNoScore');
+}
+
 function openDailyGate(){if(standalone()){if(!getProfile())askProfile(()=>play('daily'));else play('daily');return;}$('#dailyGateDialog').showModal();}
 function showGuide(){if($('#dailyGateDialog').open)$('#dailyGateDialog').close();guideIndex=0;renderGuide();$('#iphoneGuideDialog').showModal();}
-function renderGuide(){const n=guideIndex+1;$('#guideStepNum').textContent=txt('stepCounter').replace('{current}',String(n)).replace('{total}','5');$('#guideStepTitle').textContent=txt('iosStep'+n+'Title');$('#guideStepBody').textContent=txt('iosStep'+n+'Body');const symbols=['◉','⬆','⊞','✓','6'];$('#guideVisual').textContent=symbols[guideIndex];$('#guidePrev').disabled=guideIndex===0;$('#guideNext').textContent=guideIndex===4?txt('finishGuide'):txt('next');}
+function renderGuide(){
+ const n=guideIndex+1;
+ $('#guideStepNum').textContent=txt('stepCounter').replace('{current}',String(n)).replace('{total}','5');
+ $('#guideStepTitle').textContent=txt('iosStep'+n+'Title');
+ $('#guideStepBody').textContent=txt('iosStep'+n+'Body');
+ const prog=$('#guideProgress');prog.replaceChildren();
+ for(let i=0;i<5;i++){const bar=document.createElement('span');bar.className=i<=guideIndex?'lit':'';prog.append(bar);}
+ const visual=$('#guideVisual');visual.replaceChildren();
+ const frame=document.createElement('div');frame.className='iphone-illustration';
+ const island=document.createElement('div');island.className='phone-island';
+ const bar=document.createElement('div');bar.className='phone-browser';bar.textContent=n===1?'6sudoku.github.io':n===5?'6 Sudoku':'Safari';
+ const panel=document.createElement('div');panel.className='phone-panel';
+ const symbol=document.createElement('div');symbol.className='phone-step-symbol';
+ const symbols=['◎','↑','＋','✓','6'];symbol.textContent=symbols[guideIndex];
+ const desc=document.createElement('div');desc.className='phone-step-label';desc.textContent=txt('stepShort'+n);
+ panel.append(symbol,desc);frame.append(island,bar,panel);visual.append(frame);
+ $('#guidePrev').disabled=guideIndex===0;
+ $('#guideNext').textContent=guideIndex===4?txt('finishGuide'):txt('next');
+}
 
 function init(){drawDecor();applyLanguage();showScreen('homeScreen');
  $$('#numberPad button').forEach(b=>b.onclick=()=>enter(Number(b.dataset.digit)));

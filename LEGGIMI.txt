@@ -95,3 +95,6 @@ VERSIONE 0.9: Credito visibile “Ideato e sviluppato da Alessandro”. Il nome 
 VERSIONE 0.10: Link mailto sul nome Alessandro con oggetto automatico "Info per 6sudoku".
 
 VERSIONE 0.11: schermate classifica locale (DEMO, nessun database), profilo nickname e Paese salvato sul dispositivo, etichetta «Sei tu» verificata tramite ID locale, Sfida quotidiana accessibile solo in display-mode standalone, guida iPhone a cinque passaggi e localizzazioni in 6 lingue. Caricare tutti i file, incluso js/v011-i18n.js.
+
+
+PATCH 0.11.1: classifica accessibile dalla Home, schermata senza risultati mondiali inventati, risultati locali evidenziati, guida iPhone con mini-illustrazioni CSS e progressi; cache aggiornata. Importante: pubblicare contenuto dello ZIP nella root del repository GitHub (non caricare ZIP).
