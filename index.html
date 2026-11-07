@@ -15,6 +15,7 @@
  <title>6 Sudoku — Sei pronto?</title>
  <script src="js/sudoku.js" defer></script>
  <script src="js/languages.js" defer></script>
+ <script src="js/v011-i18n.js" defer></script>
  <script src="js/app.js" defer></script>
 </head>
 <body>
@@ -46,6 +47,7 @@
     <div class="install-copy"><strong data-text="installTitle">Installa 6 Sudoku</strong><p id="installInstructions"></p></div>
     <button id="installNow" class="install-action" data-text="install">Installa</button>
    </div>
+   <div class="daily-extra"><button id="openLeaderboard" class="secondary" data-text="leaderboard">🏆 Classifica mondiale (anteprima)</button></div>
    <div class="home-links"><button class="quiet" id="openRules" data-text="howTo">Come si gioca?</button><button class="quiet" id="openStats" data-text="stats">Le mie statistiche</button><button class="quiet" id="shareApp" data-text="shareApp">Condividi l'app</button></div>
   </section>
   <section id="gameScreen" class="screen" hidden>
@@ -57,10 +59,18 @@
    <div class="tool-row"><button class="quiet" id="gameRules" data-text="howTo">Come si gioca?</button><button class="quiet" id="erase">⌫ <span data-text="erase">Cancella</span></button><button class="quiet" id="hint">✦ <span data-text="hint">Suggerimento</span></button><button class="quiet" id="sharePuzzle">↗ <span data-text="share">Condividi</span></button></div>
    <p class="game-feedback" id="feedback" aria-live="polite"></p>
   </section>
+  <section id="leaderboardScreen" class="screen" hidden>
+    <div class="game-nav"><button class="quiet back" id="leaderboardBack">← <span data-text="home">Home</span></button></div>
+    <div class="ranking-hero"><div class="ranking-symbol">🏆</div><span class="kicker" data-text="daily">Sfida quotidiana</span><h1 data-text="leaderboard">Classifica mondiale</h1><p id="rankingDay"></p></div>
+    <div class="ranking-tabs" role="group" aria-label="Difficulty"><button data-rank-level="beginner" data-text="beginner">Principiante</button><button data-rank-level="intermediate" data-text="intermediate">Intermedio</button><button data-rank-level="advanced" data-text="advanced">Avanzato</button></div>
+    <div id="rankingRows" class="ranking-rows"></div>
+    <div class="demo-note"><strong data-text="demoTitle">Classifica dimostrativa</strong><p data-text="demoNotice">Non sono ancora disponibili risultati di altri giocatori: il database online non è attivo. I nomi mostrati sono esempi.</p></div>
+    <button class="primary full-width" id="rankingDaily" data-text="daily">Sfida quotidiana</button>
+  </section>
   <section id="statsScreen" class="screen" hidden><div class="game-nav"><button class="quiet back" id="statsBack">← <span data-text="home">Home</span></button></div><div class="hello"><span class="kicker" data-text="statsKicker">IL TUO PERCORSO</span><h1 data-text="stats">Le mie statistiche</h1><p data-text="statsDesc">Un passo alla volta, una griglia alla volta.</p></div><div class="stats-grid"><div><strong id="statWins">0</strong><span data-text="wins">Schemi completati</span></div><div><strong id="statToday">0</strong><span data-text="today">Completati oggi</span></div><div><strong id="statBest">—</strong><span data-text="best">Miglior tempo</span></div></div></section>
  </main>
  <footer class="app-footer">
-  <div>6 SUDOKU <span class="app-version">v0.10</span> · <span data-text="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></div>
+  <div>6 SUDOKU <span class="app-version">v0.11</span> · <span data-text="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></div>
   <div class="developer-credit"><span data-text="developerCredit">Ideato e sviluppato da</span> <a href="mailto:ondefx@gmail.com?subject=Info%20per%206sudoku" aria-label="Email dello sviluppatore: ondefx@gmail.com">Alessandro</a></div>
  </footer>
 </div>
@@ -72,6 +82,28 @@
  <div id="rulesContent" class="rules-content"></div>
  <button id="rulesClose" class="primary" data-text="understood">Ho capito</button></div>
 </dialog>
+<dialog id="dailyGateDialog" class="tip-dialog enhanced-dialog" aria-labelledby="gateHeading"><div>
+ <div class="dialog-emblem">📲</div><h2 id="gateHeading" data-text="gateTitle">Installa 6 Sudoku</h2><p data-text="gateIntro">La Sfida quotidiana è riservata a chi apre l'app dalla schermata Home. Il gioco libero rimane disponibile nel browser.</p>
+ <button id="gateGuide" class="primary" data-text="iphoneGuide">Guida illustrata per iPhone</button>
+ <button id="gateInstall" class="secondary" data-text="install">Installa</button>
+ <button id="gateClose" class="quiet" data-text="close">Chiudi</button>
+ </div></dialog>
+<dialog id="iphoneGuideDialog" class="tip-dialog enhanced-dialog" aria-labelledby="iphoneHeading"><div>
+ <div class="dialog-emblem">📱</div><h2 id="iphoneHeading" data-text="iphoneGuide">Guida illustrata per iPhone</h2>
+ <p id="guideStepNum" class="guide-counter"></p><div id="guideVisual" class="guide-visual" aria-hidden="true"></div>
+ <h3 id="guideStepTitle"></h3><p id="guideStepBody"></p>
+ <div class="guide-nav"><button class="secondary" id="guidePrev" data-text="previous">Indietro</button><button class="primary" id="guideNext" data-text="next">Avanti</button></div>
+ <button id="guideClose" class="quiet" data-text="close">Chiudi</button>
+ </div></dialog>
+<dialog id="profileDialog" class="tip-dialog enhanced-dialog" aria-labelledby="profileHeading"><div>
+ <div class="dialog-emblem">👤</div><h2 id="profileHeading" data-text="profileTitle">Il tuo nome di gioco</h2><p data-text="profileIntro">Scegli un nickname e, se vuoi, il Paese da mostrare nella classifica.</p>
+ <label for="profileName" data-text="nickname">Nickname</label><input id="profileName" maxlength="16" minlength="2" autocomplete="nickname" placeholder="Nickname" required>
+ <label for="profileCountry" data-text="country">Paese (facoltativo)</label>
+ <select id="profileCountry"><option value="" data-text="noCountry">Nessun Paese</option><option value="IT">🇮🇹 Italia</option><option value="GB">🇬🇧 United Kingdom</option><option value="DE">🇩🇪 Deutschland</option><option value="FR">🇫🇷 France</option><option value="CN">🇨🇳 中国</option><option value="RU">🇷🇺 Россия</option><option value="US">🇺🇸 United States</option><option value="ES">🇪🇸 España</option><option value="PT">🇵🇹 Portugal</option><option value="BR">🇧🇷 Brasil</option><option value="JP">🇯🇵 日本</option><option value="OTHER">🌍 Other</option></select>
+ <div class="profile-preview"><small data-text="yourPreview">Anteprima</small><strong id="profilePreview">Giocatore 🌍</strong></div>
+ <p id="profileError" class="error-label" role="alert"></p>
+ <button id="profileSave" class="primary" data-text="confirmContinue">Conferma e continua</button><button id="profileCancel" class="quiet" data-text="close">Chiudi</button>
+ </div></dialog>
 <dialog id="installDialog" class="tip-dialog"><div><h2 data-text="installHelp">Installa 6 Sudoku</h2><p id="manualHelp"></p><button id="tipClose" class="primary" data-text="understood">Ho capito</button></div></dialog>
 <dialog id="shareDialog" class="tip-dialog"><div><h2 data-text="shareTitle">Condividi la sfida</h2><p data-text="shareDesc">Scegli come inviare il link.</p><button class="primary" id="shareNative" data-text="shareMenu">Condividi con...</button><button class="secondary" id="shareWa" data-text="whatsapp">Invia su WhatsApp</button><button class="secondary" id="shareCopy" data-text="copy">Copia il link</button><button class="quiet" id="shareClose" data-text="close">Chiudi</button></div></dialog>
 </body>

@@ -35,3 +35,21 @@ footer{text-align:center;font-size:9px;color:#9aa69b;letter-spacing:.06em;paddin
 
 /* Icona ufficiale nella testata */
 .logo-wrap .app-logo{display:block;width:39px;height:39px;object-fit:cover;border-radius:12px;background:transparent;flex-shrink:0}
+
+/* Versione app e contatto ideatore: discreti, leggibili su smartphone */
+.app-footer{line-height:1.7;letter-spacing:.035em;padding-bottom:max(4px,env(safe-area-inset-bottom))}
+.app-version{font-weight:750;color:#597a61;white-space:nowrap}
+.developer-credit{font-size:10px;margin-top:3px;letter-spacing:0}
+.developer-credit a{color:var(--green);text-decoration:underline;text-underline-offset:2px;overflow-wrap:anywhere;padding:3px 0}
+
+/* v0.11 -- light additional screens */
+.daily-extra{margin-top:10px}.daily-extra .secondary{width:100%;padding:11px}
+.ranking-hero{text-align:center;padding:4px 0 18px}.ranking-symbol{font-size:38px;margin-bottom:10px}.ranking-hero h1{font-size:29px;margin:6px 0}.ranking-hero p{font-size:11px;color:var(--muted)}
+.ranking-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;border:1px solid var(--line);background:white;padding:4px;border-radius:14px;margin:4px 0 15px}
+.ranking-tabs button{padding:10px 2px;font-size:11px;background:none;border:0;color:var(--muted);border-radius:10px}.ranking-tabs button.active{color:white;background:var(--green);font-weight:700}
+.ranking-rows{display:grid;gap:7px;min-height:67px}.ranking-row{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);background:white;border-radius:12px;padding:14px 12px;gap:10px}.ranking-row.own{background:#e9f4e9;border-color:#c9e2ce}.ranking-name{display:flex;align-items:center;gap:5px;flex-wrap:wrap;font-size:13px}.own-tag{color:var(--green);font-size:11px;font-weight:700}.ranking-time{font-variant-numeric:tabular-nums;font-size:15px}.ranking-empty{font-size:12px;text-align:center;color:var(--muted);margin:15px 6px}
+.demo-note{border-radius:13px;background:#f0f4f8;border:1px solid #e1e7ef;padding:14px;margin:20px 0}.demo-note strong{font-size:13px}.demo-note p{font-size:11px;line-height:1.6;color:#687987;margin:5px 0 0}.full-width{width:100%}
+.enhanced-dialog>div{max-height:85dvh;overflow-y:auto;gap:11px}.dialog-emblem{font-size:30px;background:#e9f4ea;border-radius:50%;width:62px;height:62px;display:grid;place-items:center;margin:0 auto}.enhanced-dialog h2{text-align:center;font-size:23px}.enhanced-dialog .primary,.enhanced-dialog .secondary{width:100%}.enhanced-dialog .quiet{justify-self:center}
+.enhanced-dialog label{font-size:12px;font-weight:700;color:#4e6252}.enhanced-dialog input,.enhanced-dialog select{width:100%;border:1px solid #cedbd0;border-radius:11px;background:#fff;color:#243a29;padding:12px;font-size:14px;min-height:45px}
+.profile-preview{background:#eaf5eb;border-radius:12px;padding:14px;display:grid;gap:5px}.profile-preview small{font-size:10px;color:#617d68}.profile-preview strong{font-size:16px}.error-label{color:#a43a35!important;font-size:11px!important}
+.guide-counter{text-align:center;font-weight:700;font-size:11px!important;color:var(--green)!important}.guide-visual{border-radius:20px;background:#e9f4ea;border:1px solid #d4e8d8;min-height:128px;display:grid;place-items:center;color:var(--green);font-size:65px;font-weight:750}.enhanced-dialog h3{text-align:center;font-size:18px;margin:0}.guide-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px}
