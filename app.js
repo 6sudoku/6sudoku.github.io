@@ -1,4 +1,4 @@
-/* 6 Sudoku 0.11.1 — interfaccia touch e sfide senza server. */
+/* 6 Sudoku 0.11.2 — interfaccia touch e sfide senza server. */
 (() => {
 'use strict';
 const $=q=>document.querySelector(q), $$=q=>Array.from(document.querySelectorAll(q));
@@ -20,7 +20,7 @@ let incoming=null,game=null,selected=-1,elapsed=0,hints=0,startAt=0,timer=null,e
 let rankLevel='intermediate',guideIndex=0,profileNext=null;
 const params=new URLSearchParams(location.search);
 if(/^[a-zA-Z0-9-]{4,40}$/.test(params.get('c')||'') && ['beginner','intermediate','advanced'].includes(params.get('d'))){const t=Number(params.get('t'));incoming={id:params.get('c'),level:params.get('d'),target:params.has('t')&&Number.isInteger(t)&&t>=1&&t<=86400?t:null};level=incoming.level;}
-function txt(key){return T[lang][key]||key;}
+function txt(key){return (T[lang]&&T[lang][key])||T.it[key]||"";}
 function format(n){n=Math.max(0,Math.floor(n));return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');}
 function applyLanguage(){document.documentElement.lang=lang;$$('[data-text]').forEach(e=>e.textContent=txt(e.dataset.text));$('#language').value=lang;localizeCountryNames();$$('[data-level]').forEach(e=>{e.classList.toggle('selected',e.dataset.level===level);e.setAttribute('aria-pressed',e.dataset.level===level?'true':'false');});$('#startFree').textContent=incoming?txt('invite'):txt('play');if(incoming){$('#challengeIncoming').hidden=false;$('#incomingTarget').textContent=incoming.target?`${txt('challengeTarget')}: ${format(incoming.target)} · ${txt(level)}`:txt(level);}if(game){$('#gameTitle').textContent=game.daily?txt('dailyTitle'):txt(game.level);updateTarget();}showInstall();if($('#rulesDialog').open)renderRules();if(!$('#leaderboardScreen').hidden)renderLeaderboard();if($('#iphoneGuideDialog').open)renderGuide();if($('#profileDialog').open)previewProfile();}
 function drawDecor(){let vals=[2,0,5,1,0,6,0,4,0,3,2,0,4,1,0,6,0,3,0,6,2,0,5,1,3,0,4,2,0,5,0,5,1,0,6,4];$('#decorBoard').innerHTML=vals.map(n=>`<div class="decor-cell">${n||''}</div>`).join('');}
@@ -105,7 +105,10 @@ function openRules(){renderRules();$('#rulesDialog').showModal();}
 function safeLoad(key){try{return JSON.parse(localStorage.getItem(key)||'null');}catch(e){return null;}}
 function safeSave(key,value){try{localStorage.setItem(key,JSON.stringify(value));}catch(e){}}
 function getPlayerId(){let id=localStorage.getItem('6sudoku-player-id');if(!id){id='P-'+newId();try{localStorage.setItem('6sudoku-player-id',id);}catch(e){}}return id;}
-function getProfile(){const p=safeLoad('6sudoku-profile');return p&&p.nickname&&p.id?p:null;}
+function getProfile(){
+ const p=safeLoad('6sudoku-profile');
+ return p&&typeof p.nickname==='string'&&Array.from(p.nickname.trim()).length>=2&&p.id?p:null;
+}
 function askProfile(done){profileNext=done||null;const p=getProfile();$('#profileName').value=p?.nickname||'';$('#profileCountry').value=p?.country||'';$('#profileError').textContent='';previewProfile();$('#profileDialog').showModal();}
 function localizeCountryNames(){
  const select=$('#profileCountry');if(!select)return;
@@ -139,7 +142,11 @@ function renderLeaderboard(){
  }else personal.textContent=txt('personalNoScore');
 }
 
-function openDailyGate(){if(standalone()){if(!getProfile())askProfile(()=>play('daily'));else play('daily');return;}$('#dailyGateDialog').showModal();}
+function openDailyGate(){
+ if(!standalone()){$('#dailyGateDialog').showModal();return;}
+ if(!getProfile()){askProfile(()=>play('daily'));return;}
+ play('daily');
+}
 function showGuide(){if($('#dailyGateDialog').open)$('#dailyGateDialog').close();guideIndex=0;renderGuide();$('#iphoneGuideDialog').showModal();}
 function renderGuide(){
  const n=guideIndex+1;
@@ -170,7 +177,7 @@ function init(){drawDecor();applyLanguage();showScreen('homeScreen');
  $('#erase').onclick=()=>enter(0);$('#hint').onclick=help;$('#sharePuzzle').onclick=()=>shareOpen(false);$('#shareApp').onclick=()=>shareOpen(true);
  $('#openRules').onclick=openRules;$('#gameRules').onclick=openRules;
  $('#rulesClose').onclick=()=>$('#rulesDialog').close();
- $('#openLeaderboard').onclick=()=>showScreen('leaderboardScreen');$('#leaderboardBack').onclick=()=>showScreen('homeScreen');$('#rankingDaily').onclick=openDailyGate;$$('[data-rank-level]').forEach(b=>b.onclick=()=>{rankLevel=b.dataset.rankLevel;renderLeaderboard();});
+ $('#openLeaderboard').onclick=()=>showScreen('leaderboardScreen');$('#editProfile').onclick=()=>askProfile(null);$('#leaderboardBack').onclick=()=>showScreen('homeScreen');$('#rankingDaily').onclick=openDailyGate;$$('[data-rank-level]').forEach(b=>b.onclick=()=>{rankLevel=b.dataset.rankLevel;renderLeaderboard();});
  $('#gateClose').onclick=()=>$('#dailyGateDialog').close();$('#gateGuide').onclick=showGuide;$('#gateInstall').onclick=()=>{$('#dailyGateDialog').close();openInstallInfo();};
  $('#guideClose').onclick=()=>$('#iphoneGuideDialog').close();$('#guidePrev').onclick=()=>{guideIndex=Math.max(0,guideIndex-1);renderGuide();};$('#guideNext').onclick=()=>{if(guideIndex===4){$('#iphoneGuideDialog').close();return;}guideIndex++;renderGuide();};
  $('#profileName').oninput=previewProfile;$('#profileCountry').onchange=previewProfile;$('#profileSave').onclick=saveProfile;$('#profileCancel').onclick=()=>{profileNext=null;$('#profileDialog').close();};

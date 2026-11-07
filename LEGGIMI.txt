@@ -98,3 +98,12 @@ VERSIONE 0.11: schermate classifica locale (DEMO, nessun database), profilo nick
 
 
 PATCH 0.11.1: classifica accessibile dalla Home, schermata senza risultati mondiali inventati, risultati locali evidenziati, guida iPhone con mini-illustrazioni CSS e progressi; cache aggiornata. Importante: pubblicare contenuto dello ZIP nella root del repository GitHub (non caricare ZIP).
+
+
+VERSIONE 0.11.2
+- Il pulsante Classifica mondiale e ora della stessa dimensione/stile dei due pulsanti di gioco.
+- Il nickname viene richiesto al primo accesso alla Sfida quotidiana dall'app installata; se presente, non viene richiesto nuovamente.
+- Da Classifica mondiale e possibile impostare/modificare nickname e Paese in ogni momento.
+- Traduzioni disponibili nelle sei lingue. Nessuna traduzione mancante viene mostrata come codice tecnico.
+- Cache PWA aggiornata: versione 0.11.2.
+- Per testare il nickname: installare la PWA e aprire Sfida quotidiana; sul browser compare invece la guida di installazione.

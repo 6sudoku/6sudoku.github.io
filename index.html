@@ -41,13 +41,12 @@
     <button class="level" data-level="intermediate" aria-pressed="false"><span class="level-left"><i class="level-dot second"></i><span><b data-text="intermediate">Intermedio</b><small data-text="intermediateDesc">Un po’ più di ragionamento</small></span></span><span class="tick">✓</span></button>
     <button class="level" data-level="advanced" aria-pressed="false"><span class="level-left"><i class="level-dot third"></i><span><b data-text="advanced">Avanzato</b><small data-text="advancedDesc">Mettiti alla prova</small></span></span><span class="tick">✓</span></button>
    </div>
-   <div class="main-actions"><button id="startFree" class="primary" data-text="play">Inizia una partita</button><button id="startDaily" class="secondary" data-text="daily">Sfida quotidiana</button></div>
+   <div class="main-actions"><button id="startFree" class="primary" data-text="play">Inizia una partita</button><button id="startDaily" class="secondary" data-text="daily">Sfida quotidiana</button><button id="openLeaderboard" class="secondary" data-text="leaderboard">Classifica mondiale</button></div>
    <div id="installBox" class="install-card" hidden>
     <img src="assets/icon-192.png" width="43" height="43" alt="Icona 6 Sudoku" class="install-icon">
     <div class="install-copy"><strong data-text="installTitle">Installa 6 Sudoku</strong><p id="installInstructions"></p></div>
     <button id="installNow" class="install-action" data-text="install">Installa</button>
    </div>
-   <div class="ranking-entry"><span class="ranking-entry-icon" aria-hidden="true">🏆</span><div class="ranking-entry-copy"><strong data-text="rankingEntryTitle">Classifica mondiale</strong><small data-text="rankingEntrySubtitle">Sfida quotidiana · Tempi e risultati</small></div><button id="openLeaderboard" class="ranking-entry-button" data-text="rankingEntryAction">Visualizza</button></div>
    <div class="home-links"><button class="quiet" id="openRules" data-text="howTo">Come si gioca?</button><button class="quiet" id="openStats" data-text="stats">Le mie statistiche</button><button class="quiet" id="shareApp" data-text="shareApp">Condividi l'app</button></div>
   </section>
   <section id="gameScreen" class="screen" hidden>
@@ -68,13 +67,14 @@
       <div id="rankingRows" class="ranking-rows" aria-live="polite"></div>
     </section>
     <section id="rankingPersonal" class="ranking-personal"><span data-text="personalScoreTitle">Il tuo risultato di oggi</span><strong id="rankingPersonalTime">—</strong><small id="rankingPersonalText"></small></section>
+    <button id="editProfile" class="quiet profile-manage" data-text="manageProfile">Imposta o modifica nickname e Paese</button>
     <div class="demo-note"><div class="demo-note-icon" aria-hidden="true">ⓘ</div><div><strong data-text="demoTitle">Classifica dimostrativa</strong><p data-text="demoNotice">Non sono ancora disponibili risultati di altri giocatori: il database online non è attivo.</p></div></div>
     <button class="primary full-width" id="rankingDaily" data-text="daily">Sfida quotidiana</button>
   </section>
   <section id="statsScreen" class="screen" hidden><div class="game-nav"><button class="quiet back" id="statsBack">← <span data-text="home">Home</span></button></div><div class="hello"><span class="kicker" data-text="statsKicker">IL TUO PERCORSO</span><h1 data-text="stats">Le mie statistiche</h1><p data-text="statsDesc">Un passo alla volta, una griglia alla volta.</p></div><div class="stats-grid"><div><strong id="statWins">0</strong><span data-text="wins">Schemi completati</span></div><div><strong id="statToday">0</strong><span data-text="today">Completati oggi</span></div><div><strong id="statBest">—</strong><span data-text="best">Miglior tempo</span></div></div></section>
  </main>
  <footer class="app-footer">
-  <div>6 SUDOKU <span class="app-version">v0.11.1</span> · <span data-text="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></div>
+  <div>6 SUDOKU <span class="app-version">v0.11.2</span> · <span data-text="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></div>
   <div class="developer-credit"><span data-text="developerCredit">Ideato e sviluppato da</span> <a href="mailto:ondefx@gmail.com?subject=Info%20per%206sudoku" aria-label="Email dello sviluppatore: ondefx@gmail.com">Alessandro</a></div>
  </footer>
 </div>
