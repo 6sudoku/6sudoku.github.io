@@ -35,3 +35,9 @@ footer{text-align:center;font-size:9px;color:#9aa69b;letter-spacing:.06em;paddin
 
 /* Icona ufficiale nella testata */
 .logo-wrap .app-logo{display:block;width:39px;height:39px;object-fit:cover;border-radius:12px;background:transparent;flex-shrink:0}
+
+/* Versione app e contatto ideatore: discreti, leggibili su smartphone */
+.app-footer{line-height:1.7;letter-spacing:.035em;padding-bottom:max(4px,env(safe-area-inset-bottom))}
+.app-version{font-weight:750;color:#597a61;white-space:nowrap}
+.developer-credit{font-size:10px;margin-top:3px;letter-spacing:0}
+.developer-credit a{color:var(--green);text-decoration:underline;text-underline-offset:2px;overflow-wrap:anywhere;padding:3px 0}

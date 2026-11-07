@@ -59,7 +59,10 @@
   </section>
   <section id="statsScreen" class="screen" hidden><div class="game-nav"><button class="quiet back" id="statsBack">← <span data-text="home">Home</span></button></div><div class="hello"><span class="kicker" data-text="statsKicker">IL TUO PERCORSO</span><h1 data-text="stats">Le mie statistiche</h1><p data-text="statsDesc">Un passo alla volta, una griglia alla volta.</p></div><div class="stats-grid"><div><strong id="statWins">0</strong><span data-text="wins">Schemi completati</span></div><div><strong id="statToday">0</strong><span data-text="today">Completati oggi</span></div><div><strong id="statBest">—</strong><span data-text="best">Miglior tempo</span></div></div></section>
  </main>
- <footer>6 SUDOKU · <span data-text="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></footer>
+ <footer class="app-footer">
+  <div>6 SUDOKU <span class="app-version">v0.10</span> · <span data-text="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></div>
+  <div class="developer-credit"><span data-text="developerCredit">Ideato e sviluppato da</span> <a href="mailto:ondefx@gmail.com?subject=Info%20per%206sudoku" aria-label="Email dello sviluppatore: ondefx@gmail.com">Alessandro</a></div>
+ </footer>
 </div>
 <dialog id="winDialog" class="win-dialog">
  <div class="win-inner"><div class="win-symbol">✦</div><span class="kicker" data-text="finished">SFIDA COMPLETATA</span><h2 data-text="congrats">Complimenti!</h2><p data-text="winSubtitle">Hai completato il tuo 6 Sudoku.</p><div class="result-time" id="resultTime">01:41</div><div class="result-meta" id="resultMeta"></div><div class="challenge-result" id="challengeResult" hidden></div><button class="primary" id="challengeFriend" data-text="challengeFriend">🏁 Sfida un amico</button><div class="win-bottom"><button class="secondary" id="newGame" data-text="newGame">Nuova partita</button><button class="secondary" id="goHome" data-text="home">Home</button></div><button class="whatsapp-button" id="whatsapp" data-text="whatsapp">Invia su WhatsApp</button><button class="quiet win-install" id="winInstall" data-text="installWin">⬇ Installa l’app</button></div>

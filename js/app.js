@@ -1,4 +1,4 @@
-/* 6 Sudoku 0.4 — interfaccia touch e sfide senza server. */
+/* 6 Sudoku 0.8 — interfaccia touch e sfide senza server. */
 (() => {
 'use strict';
 const $=q=>document.querySelector(q), $$=q=>Array.from(document.querySelectorAll(q));
@@ -9,6 +9,8 @@ const T={
 Object.assign(T.it,{howTo:'Come si gioca?',howToTitle:'Come si gioca a 6 Sudoku?',shareChallengeDone:'🧩 Ti sfido a 6 Sudoku!\\nHo completato il livello {level} in {time} ⏱️{hints}\\nPensi di riuscire a battermi? Gioca lo stesso schema!\\n{url}',shareChallengeOpen:'🧩 Giochiamo allo stesso 6 Sudoku! Riesci a battermi?\\n{url}',shareAppMessage:'🧩 Prova 6 Sudoku, un piccolo grande gioco di logica!\\n{url}',hintsShare:' ({count} aiuti inclusi nel punteggio)'});
 Object.assign(T.en,{howTo:'How to play',howToTitle:'How to play 6 Sudoku',shareChallengeDone:'🧩 I challenge you to 6 Sudoku!\\nI solved {level} in {time} ⏱️{hints}\\nCan you beat my time? Play the exact same puzzle!\\n{url}',shareChallengeOpen:'🧩 Let’s play the same 6 Sudoku! Can you beat me?\\n{url}',shareAppMessage:'🧩 Try 6 Sudoku, a little big logic game!\\n{url}',hintsShare:' ({count} hints included in the score)'});
 Object.assign(T,window.SudokuLanguages||{});
+const creatorCredits={it:'Ideato e sviluppato da',en:'Created and developed by',de:'Idee und Entwicklung:',fr:'Conçu et développé par',zh:'创意与开发：',ru:'Идея и разработка:'};
+Object.entries(creatorCredits).forEach(([locale,credit])=>{if(T[locale])T[locale].developerCredit=credit;});
 const detectLanguage=()=>{const l=(navigator.language||'it').toLowerCase();return ['it','en','de','fr','zh','ru'].find(k=>l.startsWith(k))||'en';};
 const defaults={lang:detectLanguage(),level:'beginner'};
 let lang=localStorage.getItem('6sudoku-lang')||defaults.lang,level=localStorage.getItem('6sudoku-level')||defaults.level;
@@ -50,19 +52,20 @@ function checkWin(){if(ended||!game.cells.every((v,i)=>v===game.solution[i]))ret
 function recordScore(total){try{const k='6sudoku-stats';let s=JSON.parse(localStorage.getItem(k)||'{}');let today=new Date().toLocaleDateString('en-CA');s.wins=(Number(s.wins)||0)+1;s.best=s.best===undefined?total:Math.min(s.best,total);s.daily=s.daily&&typeof s.daily==='object'?s.daily:{};s.daily[today]=(Number(s.daily[today])||0)+1;localStorage.setItem(k,JSON.stringify(s));}catch(e){}}
 function showStats(){let s={};try{s=JSON.parse(localStorage.getItem('6sudoku-stats')||'{}');}catch(e){}$('#statWins').textContent=s.wins||0;$('#statToday').textContent=s.daily?.[new Date().toLocaleDateString('en-CA')]||0;$('#statBest').textContent=s.best===undefined?'—':format(s.best);}
 function challengeLink(){const u=new URL('./',location.href);u.search='';u.hash='';if(game){u.searchParams.set('c',game.id);u.searchParams.set('d',game.level);if(ended)u.searchParams.set('t',String(elapsed+hints*30));}return u.href;}
+function ensureLink(message,url){return message.includes(url)?message:message.trimEnd()+'\n'+url;}
 function buildShare(appOnly=false){
  const template=(key,vars)=>txt(key).replace(/\{(\w+)\}/g,(_,k)=>vars[k]??'').replace(/\\n/g,'\n');
  if(!appOnly&&game){
   const url=challengeLink();
   const message=ended?template('shareChallengeDone',{level:txt(game.level),time:format(elapsed+hints*30),hints:hints?template('hintsShare',{count:hints}):'',url}):template('shareChallengeOpen',{url});
-  return {url,message,title:'6 Sudoku'};
+  return {url,message:ensureLink(message,url),title:'6 Sudoku'};
  }
  const url=new URL('./',location.href).href;
- return {url,message:template('shareAppMessage',{url}),title:'6 Sudoku'};
+ return {url,message:ensureLink(template('shareAppMessage',{url}),url),title:'6 Sudoku'};
 }
 function canShare(){return location.protocol==='https:'||location.hostname==='localhost';}
 function shareOpen(appOnly=false){if(!canShare()){$('#feedback').textContent=txt('noWeb');if(!game)alert(txt('noWeb'));return;}currentShare=buildShare(appOnly);$('#shareDialog').showModal();}
-async function nativeShare(){if(!currentShare)return;if(navigator.share){try{await navigator.share({title:currentShare.title,text:currentShare.message.replace(currentShare.url,'').trim(),url:currentShare.url});$('#shareDialog').close();return;}catch(e){if(e.name==='AbortError')return;}}await copyLink();}
+async function nativeShare(){if(!currentShare)return;if(navigator.share){try{await navigator.share({title:currentShare.title,text:currentShare.message});$('#shareDialog').close();return;}catch(e){if(e.name==='AbortError')return;}}await copyLink();}
 async function copyLink(){if(!currentShare)return;try{await navigator.clipboard.writeText(currentShare.url);$('#shareDialog').close();$('#feedback').textContent=txt('linkCopied');}catch(e){window.prompt(txt('copy'),currentShare.url);}}
 function whatsApp(){if(!currentShare)return;window.open('https://wa.me/?text='+encodeURIComponent(currentShare.message),'_blank','noopener,noreferrer');$('#shareDialog').close();}
 function standalone(){return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;}

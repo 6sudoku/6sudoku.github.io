@@ -80,3 +80,16 @@ VERSIONE 0.6 – COLLEGAMENTI DI CONDIVISIONE
 - Condivisione nativa: URL passato come campo url; WhatsApp diretto: URL compreso nel testo.
 - A capo nei messaggi invece di sequenze letterali \n.
 - Service worker aggiornato alla versione v06 per ricevere subito il nuovo JavaScript.
+
+VERSIONE 0.7: correzione link condivisione: URL sempre nel testo di WhatsApp e nel menu Condividi, senza affidarsi al campo URL separato. Cache PWA v07.
+
+
+VERSIONE 0.8
+- Footer: 6 SUDOKU v0.8 · sottotitolo localizzato.
+- Credito ideatore/sviluppatore in sei lingue.
+- Contatto cliccabile mailto:ondefx@gmail.com.
+- Cache del service worker aggiornata alla v0.8.
+
+VERSIONE 0.9: Credito visibile “Ideato e sviluppato da Alessandro”. Il nome Alessandro è cliccabile e apre mailto:ondefx@gmail.com. Versione indicata in footer aggiornata a v0.9.
+
+VERSIONE 0.10: Link mailto sul nome Alessandro con oggetto automatico "Info per 6sudoku".
