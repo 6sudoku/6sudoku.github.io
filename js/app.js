@@ -51,7 +51,7 @@ function recordScore(total){try{const k='6sudoku-stats';let s=JSON.parse(localSt
 function showStats(){let s={};try{s=JSON.parse(localStorage.getItem('6sudoku-stats')||'{}');}catch(e){}$('#statWins').textContent=s.wins||0;$('#statToday').textContent=s.daily?.[new Date().toLocaleDateString('en-CA')]||0;$('#statBest').textContent=s.best===undefined?'—':format(s.best);}
 function challengeLink(){const u=new URL('./',location.href);u.search='';u.hash='';if(game){u.searchParams.set('c',game.id);u.searchParams.set('d',game.level);if(ended)u.searchParams.set('t',String(elapsed+hints*30));}return u.href;}
 function buildShare(appOnly=false){
- const template=(key,vars)=>txt(key).replace(/\\{(\\w+)\\}/g,(_,k)=>vars[k]??'');
+ const template=(key,vars)=>txt(key).replace(/\{(\w+)\}/g,(_,k)=>vars[k]??'').replace(/\\n/g,'\n');
  if(!appOnly&&game){
   const url=challengeLink();
   const message=ended?template('shareChallengeDone',{level:txt(game.level),time:format(elapsed+hints*30),hints:hints?template('hintsShare',{count:hints}):'',url}):template('shareChallengeOpen',{url});
@@ -62,7 +62,7 @@ function buildShare(appOnly=false){
 }
 function canShare(){return location.protocol==='https:'||location.hostname==='localhost';}
 function shareOpen(appOnly=false){if(!canShare()){$('#feedback').textContent=txt('noWeb');if(!game)alert(txt('noWeb'));return;}currentShare=buildShare(appOnly);$('#shareDialog').showModal();}
-async function nativeShare(){if(!currentShare)return;if(navigator.share){try{await navigator.share({title:currentShare.title,text:currentShare.message});$('#shareDialog').close();return;}catch(e){if(e.name==='AbortError')return;}}await copyLink();}
+async function nativeShare(){if(!currentShare)return;if(navigator.share){try{await navigator.share({title:currentShare.title,text:currentShare.message.replace(currentShare.url,'').trim(),url:currentShare.url});$('#shareDialog').close();return;}catch(e){if(e.name==='AbortError')return;}}await copyLink();}
 async function copyLink(){if(!currentShare)return;try{await navigator.clipboard.writeText(currentShare.url);$('#shareDialog').close();$('#feedback').textContent=txt('linkCopied');}catch(e){window.prompt(txt('copy'),currentShare.url);}}
 function whatsApp(){if(!currentShare)return;window.open('https://wa.me/?text='+encodeURIComponent(currentShare.message),'_blank','noopener,noreferrer');$('#shareDialog').close();}
 function standalone(){return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;}

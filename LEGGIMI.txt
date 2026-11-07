@@ -73,3 +73,10 @@ VERSIONE 0.4 – MULTILINGUA E GUIDA
 - Aggiornamento del service worker alla cache v04.
 
 VERSIONE 0.5: icona ufficiale della PWA nella testata, senza nuove risorse grafiche.
+
+VERSIONE 0.6 – COLLEGAMENTI DI CONDIVISIONE
+- Corretta sostituzione di {url}, {level}, {time}, {hints} nei messaggi di sfida WhatsApp e social.
+- Link alla sfida completo (codice griglia, livello e tempo da battere).
+- Condivisione nativa: URL passato come campo url; WhatsApp diretto: URL compreso nel testo.
+- A capo nei messaggi invece di sequenze letterali \n.
+- Service worker aggiornato alla versione v06 per ricevere subito il nuovo JavaScript.

@@ -32,3 +32,6 @@ footer{text-align:center;font-size:9px;color:#9aa69b;letter-spacing:.06em;paddin
 .rules-content h3{font-size:13px;color:var(--green);margin:0 0 5px}
 .rules-content p{font-size:12px;line-height:1.55;color:#58675b;margin:0;white-space:normal}
 @media(max-width:380px){.tool-row{flex-wrap:wrap}.tool-row button{font-size:10.5px}}
+
+/* Icona ufficiale nella testata */
+.logo-wrap .app-logo{display:block;width:39px;height:39px;object-fit:cover;border-radius:12px;background:transparent;flex-shrink:0}
