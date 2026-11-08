@@ -58,3 +58,9 @@ PATCH v0.12.1: correzione SOLO bordi grafici della griglia di gioco e anteprima.
 
 
 Versione 0.12.2: ZEN/FOCUS/MASTER, evidenza Sfida quotidiana, 1 tentativo al giorno per livello, avviso prima dell'avvio, ripresa dello stesso tentativo, sei lingue. Limitazione locale: non impedisce manipolazioni dei dati o cambi dispositivo.
+
+
+VERSIONE 0.12.3 — AGGIORNAMENTI E LINGUA RUMENA
+Aggiornamenti: controllo silenzioso all’avvio, pulsante nella Home e trascinamento dalla cima della Home. In presenza di nuove versioni la PWA richiede conferma, prepara prima i file in cache e solo dopo riavvia.
+IMPORTANTE: per i prossimi rilasci aggiornare APP_VERSION in js/app.js, version.json e CACHE in service-worker.js; pubblicare tutti i file insieme. Prima installazione del nuovo sistema su vecchie PWA: può richiedere la chiusura e riapertura della PWA.
+Lingue: italiano, inglese, tedesco, francese, cinese semplificato, russo, rumeno. Le preferenze e i dati restano nelle stesse chiavi localStorage.
