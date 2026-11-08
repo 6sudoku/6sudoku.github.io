@@ -1,0 +1,54 @@
+6 SUDOKU — v0.12 (ricostruzione completa)
+========================================
+
+CONTENUTO DELLA VERSIONE
+- HTML/CSS/JavaScript puro, nessuna libreria esterna.
+- 6×6 Sudoku con SEI rettangoli 2×3 e verifica di soluzione unica.
+- Difficoltà principiante, intermedio, avanzato.
+- Partite libere, sfida quotidiana deterministica (stesso schema per livello e data UTC).
+- Guida alle regole in italiano, inglese, tedesco, francese, cinese semplificato, russo.
+- Preferenza lingua conservata con localStorage.
+- Timer, note, cancellazione, suggerimenti (+30 sec nelle partite libere).
+- Statistiche locali, nessun account o database online.
+- Sfida quotidiana accessibile dalla modalità PWA installata: controllo dell'interfaccia,
+  NON sistema di sicurezza o antimanomissione.
+- Nickname e paese facoltativo memorizzati localmente; nickname richiesto alla prima sfida quotidiana.
+- Classifica mondiale: SOLTANTO INTERFACCIA DEMO SENZA NOMI/TEMPI FINTO-REALISTICI.
+- Condivisione WhatsApp/social di link alla stessa partita e tempo da battere.
+- Footer versione e link email "Alessandro" con oggetto "Info per 6sudoku".
+- Installazione guidata iPhone e supporto installazione Android quando disponibile.
+
+STRUTTURA (SOLO QUESTI 11 FILE)
+index.html
+manifest.webmanifest
+service-worker.js
+LEGGIMI.txt
+css/style.css
+js/app.js
+js/sudoku.js
+js/languages.js
+assets/icon-192.png
+assets/icon-512.png
+assets/apple-touch-icon.png
+
+
+IMPORTANTE — SOSTITUZIONE DEL SITO GITHUB
+1. Conserva una copia ZIP del repository corrente (pulsante Code -> Download ZIP).
+2. Non caricare il nuovo ZIP dentro GitHub: estrailo e mantieni le cartelle.
+3. Rimuovi i vecchi file e cartelle non presenti in questa struttura.
+4. Carica i file nuovi nella radice del repository, mantenendo css/, js/, assets/.
+5. Se decidi di cancellare e ricreare l'intero repository, ricrealo con lo stesso nome
+   6sudoku.github.io nell'organizzazione 6sudoku e riattiva Settings -> Pages -> main -> /(root).
+6. Verifica la scritta v0.12 in basso, prova da browser anonimo e da PWA installata.
+7. In caso di vecchi file mostrati dalla PWA, chiudi e riapri. Se necessario
+   elimina e reinstalla la vecchia app, ma ricorda che cancellare i dati locali
+   può cancellare i record e il nickname memorizzati sul dispositivo.
+
+LIMITE ATTUALE
+La classifica mondiale non contiene risultati di altri utenti: per questo
+serve un database e un backend verificabile. I salvataggi locali possono
+essere persi cancellando i dati del browser o cambiando dispositivo.
+
+ATTENZIONE ALLE PROVE
+Il file index.html aperto con file:// non può dimostrare l'installazione PWA;
+per installare e condividere correttamente usa HTTPS GitHub Pages.
