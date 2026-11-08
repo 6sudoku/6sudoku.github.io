@@ -2,9 +2,10 @@
 (() => {
 'use strict';
 const $=id=>document.getElementById(id), E=window.SudokuEngine;
+const APP_VERSION='0.12.3', VERSION_URL='./version.json';
 const STORE='6sudoku-v012-state', LANGKEY='6sudoku-lang', PROFILEKEY='6sudoku-profile';
 const LEVELS=['beginner','intermediate','advanced'];
-const LANGS=[['it','🇮🇹 Italiano'],['en','🇬🇧 English'],['de','🇩🇪 Deutsch'],['fr','🇫🇷 Français'],['zh','🇨🇳 中文'],['ru','🇷🇺 Русский']];
+const LANGS=[['it','🇮🇹 Italiano'],['en','🇬🇧 English'],['de','🇩🇪 Deutsch'],['fr','🇫🇷 Français'],['zh','🇨🇳 中文'],['ru','🇷🇺 Русский'],['ro','🇷🇴 Română']];
 const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))??fallback}catch(_){return fallback}};
 const save=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value))}catch(_){}};
 const safeHTML=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -16,10 +17,84 @@ const defaultLang=()=>{let l=(navigator.language||'it').toLowerCase().slice(0,2)
 let lang=read(LANGKEY,defaultLang()), level='beginner', rankedLevel='beginner', current=null, selected=-1, noteMode=false, timer=null, lastTick=0;
 let state=read(STORE,{stats:[],daily:{},attempts:{},active:null}), profile=read(PROFILEKEY,null), pendingDaily=false, installEvent=null, step=0, shareData=null;
 let deepLink=null;
+let swRegistration=null, pendingVersion=null, checking=false, updating=false, updateCheckOnHome=false, updateControllerSeen=false;
+const versionParts=v=>String(v).split('.').map(x=>Number(x)||0);
+const isNewer=v=>{const a=versionParts(v),b=versionParts(APP_VERSION);return a.some((n,i)=>n>(b[i]||0)&&a.slice(0,i).every((q,j)=>q===(b[j]||0)))};
+function updateFeedback(key){const el=$('updateFeedback');if(el)el.textContent=key?tr(key):''}
+function activeGame(){return !!(current&&!current.finished&&$('game').classList.contains('active'))}
+function refreshAllowed(){return $('home').classList.contains('active')&&!document.querySelector('dialog[open]')}
+function showUpdateIfReady(){if(!pendingVersion||!refreshAllowed())return;if(activeGame())return;$('updateDescription').textContent=tr('updateDescription',{version:pendingVersion});openDialog('updateDialog')}
+async function checkForUpdate(silent=false){
+ if(checking||updating)return;
+ checking=true;if(!silent)updateFeedback('checkingUpdates');
+ try{
+  if(!navigator.onLine)throw Error('offline');
+  const response=await fetch(VERSION_URL+'?t='+Date.now(),{cache:'no-store'});
+  if(!response.ok)throw Error('status '+response.status);
+  const info=await response.json();if(!info||typeof info.version!=='string')throw Error('invalid version');
+  if(isNewer(info.version)){
+   pendingVersion=info.version;
+   if(swRegistration)await swRegistration.update();
+   updateFeedback('updateReady');showUpdateIfReady();
+  }else if(!silent)updateFeedback('alreadyLatest');
+ }catch(_){if(!silent)updateFeedback('updateOffline')}
+ finally{checking=false}
+}
+function watchServiceWorker(){
+ if(!('serviceWorker' in navigator)||location.protocol!=='https:')return;
+ navigator.serviceWorker.addEventListener('controllerchange',()=>{
+  if(updating&&!updateControllerSeen){updateControllerSeen=true;location.reload()}
+ });
+ navigator.serviceWorker.register('./service-worker.js',{updateViaCache:'none'}).then(reg=>{
+  swRegistration=reg;
+  reg.addEventListener('updatefound',()=>{
+   const worker=reg.installing;if(!worker)return;
+   worker.addEventListener('statechange',()=>{
+    if(worker.state==='installed'&&navigator.serviceWorker.controller&&pendingVersion)showUpdateIfReady();
+   });
+  });
+  // Primo accesso da una PWA precedente: eseguiamo il controllo ma senza riavviare una partita.
+  checkForUpdate(true);
+ }).catch(()=>{checkForUpdate(true)});
+}
+async function applyUpdate(){
+ if(activeGame()||!$('home').classList.contains('active')){updateFeedback('updateInGame');closeDialog('updateDialog');return}
+ updating=true;closeDialog('updateDialog');updateFeedback('updatePreparing');
+ try{
+  if(!swRegistration||!navigator.serviceWorker.controller)throw Error('No active worker');
+  await swRegistration.update();
+  const worker=swRegistration.waiting;
+  if(!worker)throw Error('Update not ready');
+  worker.postMessage({type:'SKIP_WAITING'});
+  // controllerchange effettua il riavvio soltanto se la nuova cache è pronta.
+ }catch(_){updating=false;updateFeedback('updateFailed')}
+}
+function initPullRefresh(){
+ const indicator=document.createElement('div');indicator.className='update-pull';indicator.setAttribute('aria-hidden','true');document.body.append(indicator);
+ let startY=null,tracking=false;
+ document.addEventListener('touchstart',ev=>{
+  if(ev.touches.length!==1||!refreshAllowed()||window.scrollY>2||checking||updating){tracking=false;return}
+  startY=ev.touches[0].clientY;tracking=true;
+ },{passive:true});
+ document.addEventListener('touchmove',ev=>{
+  if(!tracking||!refreshAllowed()||ev.touches.length!==1)return;
+  const distance=ev.touches[0].clientY-startY;
+  if(distance>20){indicator.classList.add('visible');indicator.textContent=tr(distance>=85?'releaseUpdate':'pullUpdate')}
+  else indicator.classList.remove('visible');
+ },{passive:true});
+ document.addEventListener('touchend',ev=>{
+  if(!tracking)return;tracking=false;
+  const distance=(ev.changedTouches[0]?.clientY||startY)-startY;
+  indicator.classList.remove('visible');
+  if(distance>=85&&refreshAllowed())checkForUpdate(false);
+ },{passive:true});
+ document.addEventListener('touchcancel',()=>{tracking=false;indicator.classList.remove('visible')},{passive:true});
+}
+
 const tr=(k,params={})=>{let s=window.I18N[lang]?.[k]??window.I18N.it[k]??k;return s.replace(/\{(\w+)\}/g,(_,key)=>params[key]??'')};
-function changeLanguage(next){if(!window.I18N[next])return;lang=next;save(LANGKEY,lang);applyTexts();if(current){$('gameTitle').textContent=gameTitle();drawBoard();}if($('ranking').classList.contains('active'))drawRanking();if($('rulesDialog').open)renderRules();if($('installDialog').open)drawStep();if($('profileDialog').open)drawProfile();drawDailyFeature();if($('dailyConfirmDialog').open)drawDailyConfirm()}
+function changeLanguage(next){if(!window.I18N[next])return;lang=next;save(LANGKEY,lang);applyTexts();if(current){$('gameTitle').textContent=gameTitle();drawBoard();}if($('ranking').classList.contains('active'))drawRanking();if($('rulesDialog').open)renderRules();if($('installDialog').open)drawStep();if($('profileDialog').open)drawProfile();drawDailyFeature();if($('dailyConfirmDialog').open)drawDailyConfirm();if($('updateDialog').open&&pendingVersion)$('updateDescription').textContent=tr('updateDescription',{version:pendingVersion});if($('updateFeedback').textContent)updateFeedback(pendingVersion?'updateReady':'')}
 function applyTexts(){document.documentElement.lang=lang;$('language').value=lang;document.querySelectorAll('[data-t]').forEach(el=>{el.textContent=tr(el.dataset.t)});$('notesBtn').textContent=tr(noteMode?'notesOn':'notesOff');document.querySelectorAll('[data-level]').forEach(el=>el.classList.toggle('active',el.dataset.level===level));document.querySelectorAll('[data-rank]').forEach(el=>el.classList.toggle('active',el.dataset.rank===rankedLevel));}
-function show(id){if(id==='home')drawDailyFeature();document.querySelectorAll('.screen').forEach(el=>el.classList.toggle('active',el.id===id));window.scrollTo?.(0,0);if(id==='ranking')drawRanking();if(id==='statsScreen')drawStats()}
+function show(id){if(id==='home'){drawDailyFeature();setTimeout(showUpdateIfReady,0)}document.querySelectorAll('.screen').forEach(el=>el.classList.toggle('active',el.id===id));window.scrollTo?.(0,0);if(id==='ranking')drawRanking();if(id==='statsScreen')drawStats()}
 function openDialog(id){if(!$(id).open)$(id).showModal()}
 function closeDialog(id){if($(id).open)$(id).close()}
 function todayKey(chosen=level){return date()+'|'+chosen}
@@ -68,7 +143,7 @@ function openShare(appOnly){shareData=buildShare(appOnly);openDialog('shareDialo
 function shareWhatsApp(){if(!shareData)return;const text=shareData.message;window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank','noopener,noreferrer')}
 async function shareNative(){if(!shareData)return;try{if(navigator.share){await navigator.share({title:'6 Sudoku',text:shareData.message});return}}catch(e){if(e.name==='AbortError')return}await copyLink()}
 async function copyLink(){if(!shareData)return;try{await navigator.clipboard.writeText(shareData.url);alert(tr('copied'))}catch(_){window.prompt(tr('copyFail'),shareData.url)}}
-function wire(){LANGS.forEach(([code,name])=>{let opt=document.createElement('option');opt.value=code;opt.textContent=name;$('language').append(opt)});$('language').onchange=e=>changeLanguage(e.target.value);document.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>{level=b.dataset.level;applyTexts();drawDailyFeature()});$('freeBtn').onclick=()=>start('free');$('dailyBtn').onclick=askDaily;$('dailyConfirmStart').onclick=confirmDaily;$('rankingBtn').onclick=()=>show('ranking');$('statsBtn').onclick=()=>show('statsScreen');$('rulesBtn').onclick=$('rulesGameBtn').onclick=()=>{renderRules();openDialog('rulesDialog')};$('shareAppBtn').onclick=()=>openShare(true);$('installBtn').onclick=openInstall;document.querySelectorAll('[data-back]').forEach(b=>b.onclick=goHome);$('rankingTabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{rankedLevel=b.dataset.rank;drawRanking()});$('editProfileBtn').onclick=()=>{drawProfile();openDialog('profileDialog')};$('rankDailyBtn').onclick=()=>{level=rankedLevel;applyTexts();start('daily')};$('profileForm').onsubmit=saveProfile;$('nickname').addEventListener('input',updatePreview);$('country').addEventListener('change',updatePreview);document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeDialog(b.dataset.close));$('numkeys').innerHTML=Array.from({length:6},(_,i)=>`<button type="button">${i+1}</button>`).join('');$('numkeys').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>enterNumber(i+1));$('eraseBtn').onclick=erase;$('notesBtn').onclick=()=>{noteMode=!noteMode;applyTexts();$('notesBtn').classList.toggle('active',noteMode)};$('hintBtn').onclick=hint;$('stepPrev').onclick=()=>{step=Math.max(0,step-1);drawStep()};$('stepNext').onclick=()=>{if(step===4)closeDialog('installDialog');else{step++;drawStep()}};$('installConfirm').onclick=requestInstall;$('winNew').onclick=()=>{closeDialog('winDialog');start('free')};$('winHome').onclick=()=>{closeDialog('winDialog');show('home')};$('winShare').onclick=()=>{closeDialog('winDialog');openShare(false)};$('whatsappBtn').onclick=shareWhatsApp;$('nativeShareBtn').onclick=shareNative;$('copyLinkBtn').onclick=copyLink;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvent=e});window.addEventListener('appinstalled',()=>{$('installBanner').classList.add('hidden');closeDialog('installDialog')});document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')pauseTimer();else if(current&&!current.finished&&$('game').classList.contains('active'))startTimer()});window.addEventListener('pagehide',()=>{pauseTimer();saveState()})}
-function init(){normalizeState();initPreview();wire();applyTexts();drawDailyFeature();$('installBanner').classList.toggle('hidden',isInstalled());deepLink=getChallengeParams();if(deepLink?.invalid){alert(tr('invalidLink'))}else if(deepLink){level=deepLink.level;applyTexts();start('challenge')}else if(state.active&&!state.active.finished){const a=state.active;if(a.mode==='daily'&&a.day!==date()){state.active=null;saveState();return}if(a.mode==='daily'&&!isInstalled()){openInstall();return}if(Array.isArray(a.values)&&a.values.length===36&&Array.isArray(a.solution)&&a.solution.length===36){current=a;enterGame()}}if('serviceWorker'in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('./service-worker.js').catch(()=>{})}}
+function wire(){LANGS.forEach(([code,name])=>{let opt=document.createElement('option');opt.value=code;opt.textContent=name;$('language').append(opt)});$('language').onchange=e=>changeLanguage(e.target.value);document.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>{level=b.dataset.level;applyTexts();drawDailyFeature()});$('freeBtn').onclick=()=>start('free');$('dailyBtn').onclick=askDaily;$('dailyConfirmStart').onclick=confirmDaily;$('rankingBtn').onclick=()=>show('ranking');$('statsBtn').onclick=()=>show('statsScreen');$('rulesBtn').onclick=$('rulesGameBtn').onclick=()=>{renderRules();openDialog('rulesDialog')};$('shareAppBtn').onclick=()=>openShare(true);$('checkUpdatesBtn').onclick=()=>checkForUpdate(false);$('updateLater').onclick=()=>closeDialog('updateDialog');$('updateNow').onclick=applyUpdate;$('installBtn').onclick=openInstall;document.querySelectorAll('[data-back]').forEach(b=>b.onclick=goHome);$('rankingTabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{rankedLevel=b.dataset.rank;drawRanking()});$('editProfileBtn').onclick=()=>{drawProfile();openDialog('profileDialog')};$('rankDailyBtn').onclick=()=>{level=rankedLevel;applyTexts();start('daily')};$('profileForm').onsubmit=saveProfile;$('nickname').addEventListener('input',updatePreview);$('country').addEventListener('change',updatePreview);document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeDialog(b.dataset.close));$('numkeys').innerHTML=Array.from({length:6},(_,i)=>`<button type="button">${i+1}</button>`).join('');$('numkeys').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>enterNumber(i+1));$('eraseBtn').onclick=erase;$('notesBtn').onclick=()=>{noteMode=!noteMode;applyTexts();$('notesBtn').classList.toggle('active',noteMode)};$('hintBtn').onclick=hint;$('stepPrev').onclick=()=>{step=Math.max(0,step-1);drawStep()};$('stepNext').onclick=()=>{if(step===4)closeDialog('installDialog');else{step++;drawStep()}};$('installConfirm').onclick=requestInstall;$('winNew').onclick=()=>{closeDialog('winDialog');start('free')};$('winHome').onclick=()=>{closeDialog('winDialog');show('home')};$('winShare').onclick=()=>{closeDialog('winDialog');openShare(false)};$('whatsappBtn').onclick=shareWhatsApp;$('nativeShareBtn').onclick=shareNative;$('copyLinkBtn').onclick=copyLink;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvent=e});window.addEventListener('appinstalled',()=>{$('installBanner').classList.add('hidden');closeDialog('installDialog')});document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')pauseTimer();else if(current&&!current.finished&&$('game').classList.contains('active'))startTimer()});window.addEventListener('pagehide',()=>{pauseTimer();saveState()})}
+function init(){normalizeState();initPreview();wire();applyTexts();drawDailyFeature();$('installBanner').classList.toggle('hidden',isInstalled());deepLink=getChallengeParams();if(deepLink?.invalid){alert(tr('invalidLink'))}else if(deepLink){level=deepLink.level;applyTexts();start('challenge')}else if(state.active&&!state.active.finished){const a=state.active;if(a.mode==='daily'&&a.day!==date()){state.active=null;saveState();return}if(a.mode==='daily'&&!isInstalled()){openInstall();return}if(Array.isArray(a.values)&&a.values.length===36&&Array.isArray(a.solution)&&a.solution.length===36){current=a;enterGame()}}initPullRefresh();watchServiceWorker();}
 init();
 })();
