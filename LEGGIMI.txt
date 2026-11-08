@@ -55,3 +55,6 @@ per installare e condividere correttamente usa HTTPS GitHub Pages.
 
 
 PATCH v0.12.1: correzione SOLO bordi grafici della griglia di gioco e anteprima. Linee orizzontali dopo riga 2 e 4 (celle 7-12 e 19-24). Cache PWA aggiornata, footer v0.12.1. Nessuna modifica al motore o alle statistiche.
+
+
+Versione 0.12.2: ZEN/FOCUS/MASTER, evidenza Sfida quotidiana, 1 tentativo al giorno per livello, avviso prima dell'avvio, ripresa dello stesso tentativo, sei lingue. Limitazione locale: non impedisce manipolazioni dei dati o cambi dispositivo.

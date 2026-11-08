@@ -27,13 +27,19 @@
 <section class="screen active" id="home" aria-label="Home">
  <div class="hero"><div class="overline" data-t="tagline">IL TUO PICCOLO GRANDE GIOCO</div><h1 data-t="ready">Sei pronto?</h1><p data-t="intro">Sei numeri, infinite piccole sfide. Un momento tutto per te.</p></div>
  <div class="preview" aria-hidden="true"><div class="preview-grid" id="previewGrid"></div></div>
+ <section class="daily-feature" aria-labelledby="dailyFeatureHeading">
+ <div class="daily-feature-top"><div class="daily-feature-icon" aria-hidden="true">🏆</div><div><div class="daily-feature-eyebrow" data-t="dailyUnique">UNA SOLA OCCASIONE AL GIORNO PER LIVELLO</div><h2 id="dailyFeatureHeading" data-t="daily">Sfida quotidiana</h2></div><span class="daily-feature-pill" data-t="dailyBadge">OGGI</span></div>
+ <p data-t="dailyFeatureDesc">Uno schema uguale per tutti. Una sola possibilità per livello: ZEN, FOCUS e MASTER.</p>
+ <div class="daily-feature-status" id="dailyFeatureStatus" aria-live="polite"></div>
+ <button id="dailyBtn" class="btn daily-feature-button" data-t="dailyPlay">🏆 Partecipa alla sfida</button>
+</section>
  <div class="overline level-caption" data-t="choose">SCEGLI LA DIFFICOLTÀ</div>
  <div class="levels" id="levels">
   <button class="level active" data-level="beginner"><span class="level-dot green"></span><span class="level-copy"><strong data-t="beginner">Principiante</strong><small data-t="beginnerDesc">Per iniziare con calma</small></span><span class="level-check">✓</span></button>
   <button class="level" data-level="intermediate"><span class="level-dot amber"></span><span class="level-copy"><strong data-t="intermediate">Intermedio</strong><small data-t="intermediateDesc">Un po’ più di ragionamento</small></span><span class="level-check">✓</span></button>
   <button class="level" data-level="advanced"><span class="level-dot red"></span><span class="level-copy"><strong data-t="advanced">Avanzato</strong><small data-t="advancedDesc">Mettiti alla prova</small></span><span class="level-check">✓</span></button>
  </div>
- <div class="home-actions"><button id="freeBtn" class="btn primary" data-t="play">Inizia una partita</button><button id="dailyBtn" class="btn secondary" data-t="daily">Sfida quotidiana</button><button id="rankingBtn" class="btn secondary" data-t="ranking">🏆 Classifica mondiale</button></div>
+ <div class="home-actions"><button id="freeBtn" class="btn primary" data-t="play">Inizia una partita libera</button><button id="rankingBtn" class="btn secondary" data-t="ranking">🏆 Classifica mondiale</button></div>
  <div class="install-banner" id="installBanner"><img src="./assets/icon-192.png" width="43" height="43" alt=""><div><strong data-t="install">Installa 6 Sudoku</strong><small data-t="installDesc">Installa l'app per giocare più comodamente.</small></div><button id="installBtn" class="btn primary compact" data-t="installButton">Installa</button></div>
  <div class="home-links"><button class="text-button" id="rulesBtn" data-t="rules">Come si gioca?</button><button class="text-button" id="statsBtn" data-t="stats">Le mie statistiche</button><button class="text-button" id="shareAppBtn" data-t="shareApp">Condividi l'app</button></div>
 </section>
@@ -57,8 +63,17 @@
 </section>
 <section class="screen" id="statsScreen"><div class="screenbar"><button class="back" data-back="home">← <span data-t="home">Home</span></button></div><h2 class="screen-title" data-t="stats">Le mie statistiche</h2><p class="screen-desc" data-t="statsIntro">I tuoi progressi rimangono sul dispositivo.</p><div class="stat-grid"><div><strong id="statWins">0</strong><small data-t="completed">Schemi completati</small></div><div><strong id="statToday">0</strong><small data-t="today">Completati oggi</small></div><div><strong id="statBest">—</strong><small data-t="best">Tempo migliore</small></div><div><strong id="statDaily">0</strong><small data-t="dailyDone">Sfide quotidiane</small></div></div><p class="small-muted" data-t="statsNote">I dati non si sincronizzano fra dispositivi.</p></section>
 </main>
-<footer><div>6 SUDOKU <strong>v0.12.1</strong> · <span data-t="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></div><div><span data-t="author">Ideato e sviluppato da</span> <a href="mailto:ondefx@gmail.com?subject=Info%20per%206sudoku">Alessandro</a></div></footer>
+<footer><div>6 SUDOKU <strong>v0.12.2</strong> · <span data-t="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></div><div><span data-t="author">Ideato e sviluppato da</span> <a href="mailto:ondefx@gmail.com?subject=Info%20per%206sudoku">Alessandro</a></div></footer>
 </div>
+<dialog id="dailyConfirmDialog" class="modal"><div class="modal-body daily-confirm">
+ <button class="close" data-close="dailyConfirmDialog" aria-label="Chiudi">×</button>
+ <div class="modal-emblem">🏆</div><h2 data-t="daily">Sfida quotidiana</h2>
+ <div class="daily-confirm-level" id="dailyConfirmLevel">ZEN</div>
+ <p class="modal-intro" data-t="dailyConfirmIntro">Hai una sola occasione al giorno per questo livello.</p>
+ <div class="daily-confirm-rules"><p data-t="dailyConfirmSame">✓ Tutti affrontano lo stesso schema.</p><p data-t="dailyConfirmOne">✓ Il tentativo viene utilizzato quando premi Inizia.</p><p data-t="dailyConfirmResume">✓ Se interrompi la partita, puoi riprendere lo stesso tentativo.</p><p data-t="dailyConfirmNoHints">✓ Nessun suggerimento durante la Sfida quotidiana.</p></div>
+ <button id="dailyConfirmStart" class="btn primary" data-t="dailyStart">Inizia la sfida</button>
+ <button class="btn secondary" data-close="dailyConfirmDialog" data-t="cancel">Annulla</button>
+ </div></dialog>
 <dialog id="rulesDialog" class="modal"><div class="modal-body"><button class="close" data-close="rulesDialog" aria-label="Chiudi">×</button><h2 data-t="rulesTitle">Come si gioca?</h2><div id="rulesContent"></div><button class="btn primary" data-close="rulesDialog" data-t="understood">Ho capito</button></div></dialog>
 <dialog id="installDialog" class="modal"><div class="modal-body"><button class="close" data-close="installDialog" aria-label="Chiudi">×</button><div class="modal-emblem">📲</div><h2 data-t="installTitle">Installa 6 Sudoku</h2><p class="modal-intro" data-t="dailyRequiresApp">La Sfida quotidiana è disponibile aprendo l'app installata.</p><div id="installSteps"><div class="illustration" id="stepIllustration"></div><div class="steps-count" id="stepCount"></div><h3 id="stepTitle"></h3><p id="stepBody"></p><div class="steps-controls"><button id="stepPrev" class="btn secondary" data-t="prev">Indietro</button><button id="stepNext" class="btn primary" data-t="next">Avanti</button></div></div><div id="androidInstall" class="hidden"><p data-t="androidHelp">Utilizza il menu del browser e scegli Installa app o Aggiungi alla schermata Home.</p><button class="btn primary" id="installConfirm" data-t="installButton">Installa</button></div></div></dialog>
 <dialog id="profileDialog" class="modal"><div class="modal-body"><button class="close" data-close="profileDialog" aria-label="Chiudi">×</button><div class="modal-emblem">👤</div><h2 data-t="profileTitle">Il tuo nome di gioco</h2><p class="modal-intro" data-t="profileInfo">Scegli un nickname per la Sfida quotidiana. Il Paese è facoltativo.</p><form id="profileForm"><label for="nickname" data-t="nickname">Nickname</label><input id="nickname" maxlength="20" minlength="2" autocomplete="nickname" required placeholder="Nickname"><label for="country" data-t="country">Paese (facoltativo)</label><select id="country"></select><div class="profile-preview"><span data-t="preview">Anteprima</span><strong id="namePreview">—</strong></div><button class="btn primary" type="submit" data-t="saveProfile">Salva e continua</button></form></div></dialog>
