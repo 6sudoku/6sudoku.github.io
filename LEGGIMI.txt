@@ -52,3 +52,6 @@ essere persi cancellando i dati del browser o cambiando dispositivo.
 ATTENZIONE ALLE PROVE
 Il file index.html aperto con file:// non può dimostrare l'installazione PWA;
 per installare e condividere correttamente usa HTTPS GitHub Pages.
+
+
+PATCH v0.12.1: correzione SOLO bordi grafici della griglia di gioco e anteprima. Linee orizzontali dopo riga 2 e 4 (celle 7-12 e 19-24). Cache PWA aggiornata, footer v0.12.1. Nessuna modifica al motore o alle statistiche.
