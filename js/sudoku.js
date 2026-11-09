@@ -13,16 +13,16 @@
  function groups(){let out=[];for(let r=0;r<6;r++)out.push(Array.from({length:6},(_,c)=>r*6+c));for(let c=0;c<6;c++)out.push(Array.from({length:6},(_,r)=>r*6+c));for(let br=0;br<6;br+=2)for(let bc=0;bc<6;bc+=3)out.push(Array.from({length:6},(_,k)=>(br+Math.floor(k/3))*6+bc+k%3));return out}
  const GROUPS=groups();
  function logicalDifficulty(board){let work=[...board],steps=0,hidden=0;while(work.some(v=>!v)){let changed=false;for(let i=0;i<36;i++)if(!work[i]){let cs=candidates(work,i);if(cs.length===1){work[i]=cs[0];steps++;changed=true;break}}if(changed)continue;for(const group of GROUPS){for(let n=1;n<=6;n++){if(group.some(i=>work[i]===n))continue;const spots=group.filter(i=>!work[i]&&candidates(work,i).includes(n));if(spots.length===1){work[spots[0]]=n;steps++;hidden++;changed=true;break}}if(changed)break}if(!changed)break}return {solved:work.every(Boolean),steps,hidden,remaining:work.filter(v=>!v).length}}
- const target={beginner:24,intermediate:19,advanced:14};
+ const target={beginner:24,intermediate:19,advanced:14,hero:10};
  function create(seed,level='beginner'){
   if(!Object.hasOwn(target,level))level='beginner';
   const rand=rng('6-sudoku-v012|'+seed+'|'+level),solution=fullGrid(rand);let best=null,bestScore=-1;
   // Different fixed attempts; all grids must retain a single valid solution.
-  for(let attempt=0;attempt<7;attempt++){
+  for(let attempt=0;attempt<(level==='hero'?28:7);attempt++){
    let board=[...solution];let order=shuffle(Array.from({length:36},(_,i)=>i),rand);
    for(let i of order){if(board.filter(Boolean).length<=target[level])break;const old=board[i];board[i]=0;if(countSolutions(board,2)!==1)board[i]=old}
    const logic=logicalDifficulty(board),missing=36-board.filter(Boolean).length;
-   const score=missing+(level==='advanced'&&!logic.solved?5:0)+(level==='intermediate'&&logic.hidden>0?2:0);
+   const score=missing+(level==='advanced'&&!logic.solved?5:0)+(level==='intermediate'&&logic.hidden>0?2:0)+(level==='hero'&&!logic.solved?3:0);
    if(score>bestScore){best={board,logic};bestScore=score}
    if(missing>=36-target[level]&&(level!=='advanced'||!logic.solved))break;
   }
