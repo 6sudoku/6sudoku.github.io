@@ -29,7 +29,7 @@
  <div class="preview" aria-hidden="true"><div class="preview-grid" id="previewGrid"></div></div>
  <section class="daily-feature" aria-labelledby="dailyFeatureHeading">
  <div class="daily-feature-top"><div class="daily-feature-icon" aria-hidden="true">🏆</div><div><div class="daily-feature-eyebrow" data-t="dailyUnique">UNA SOLA OCCASIONE AL GIORNO PER LIVELLO</div><h2 id="dailyFeatureHeading" data-t="daily">Sfida quotidiana</h2></div><span class="daily-feature-pill" data-t="dailyBadge">OGGI</span></div>
- <p data-t="dailyFeatureDesc">Uno schema uguale per tutti. Una sola possibilità per livello: ZEN, FOCUS e MASTER.</p>
+ <p data-t="dailyFeatureDesc">Uno schema uguale per tutti. Una sola possibilità per livello: ZEN, FOCUS, MASTER e HERO.</p>
  <div class="daily-feature-status" id="dailyFeatureStatus" aria-live="polite"></div>
  <button id="dailyBtn" class="btn daily-feature-button" data-t="dailyPlay">🏆 Partecipa alla sfida</button>
 </section>
@@ -37,7 +37,7 @@
  <div class="levels" id="levels">
   <button class="level active" data-level="beginner"><span class="level-dot green"></span><span class="level-copy"><strong data-t="beginner">Principiante</strong><small data-t="beginnerDesc">Per iniziare con calma</small></span><span class="level-check">✓</span></button>
   <button class="level" data-level="intermediate"><span class="level-dot amber"></span><span class="level-copy"><strong data-t="intermediate">Intermedio</strong><small data-t="intermediateDesc">Un po’ più di ragionamento</small></span><span class="level-check">✓</span></button>
-  <button class="level" data-level="advanced"><span class="level-dot red"></span><span class="level-copy"><strong data-t="advanced">Avanzato</strong><small data-t="advancedDesc">Mettiti alla prova</small></span><span class="level-check">✓</span></button>
+  <div class="level-hard-pair"><button class="level" data-level="advanced"><span class="level-dot red"></span><span class="level-copy"><strong data-t="advanced">MASTER</strong><small data-t="advancedDesc">Supera i tuoi limiti</small></span><span class="level-check">✓</span></button><button class="level level-hero" data-level="hero"><span class="level-dot hero-dot"></span><span class="level-copy"><strong data-t="hero">HERO 💪</strong><small data-t="heroDesc">Sfida estrema</small></span><span class="level-check">✓</span></button></div>
  </div>
  <div class="home-actions"><button id="freeBtn" class="btn primary" data-t="play">Inizia una partita libera</button><button id="rankingBtn" class="btn secondary" data-t="ranking">🏆 Classifica mondiale</button></div>
  <div class="install-banner" id="installBanner"><img src="./assets/icon-192.png" width="43" height="43" alt=""><div><strong data-t="install">Installa 6 Sudoku</strong><small data-t="installDesc">Installa l'app per giocare più comodamente.</small></div><button id="installBtn" class="btn primary compact" data-t="installButton">Installa</button></div>
@@ -56,7 +56,7 @@
 <section class="screen" id="ranking">
  <div class="screenbar"><button class="back" data-back="home">← <span data-t="home">Home</span></button><button id="editProfileBtn" class="text-button" data-t="editProfile">Profilo</button></div>
  <div class="trophy-symbol">🏆</div><h2 class="screen-title" data-t="rankingTitle">Classifica mondiale</h2><p class="screen-desc" data-t="rankingSubtitle">La Sfida quotidiana · stesso schema per tutti</p>
- <div class="level-tabs" id="rankingTabs"><button class="active" data-rank="beginner" data-t="beginner">Principiante</button><button data-rank="intermediate" data-t="intermediate">Intermedio</button><button data-rank="advanced" data-t="advanced">Avanzato</button></div>
+ <div class="level-tabs" id="rankingTabs"><button class="active" data-rank="beginner" data-t="beginner">Principiante</button><button data-rank="intermediate" data-t="intermediate">Intermedio</button><button data-rank="advanced" data-t="advanced">Avanzato</button><button type="button" data-rank="hero" data-t="hero">HERO 💪</button></div>
  <div class="ranking-date" id="rankingDate"></div>
  <div class="result-card"><div class="result-header"><span data-t="yourResult">IL TUO RISULTATO DI OGGI</span><span class="you" data-t="you">Sei tu</span></div><div class="result-body"><div><strong id="rankName">—</strong><small id="rankCountry"></small></div><div class="result-time" id="rankTime">—:—</div></div><p class="small-muted" id="rankStatus"></p></div>
  <div class="empty-ranking"><div class="empty-icon"><icon>🌍</icon></div><h3 data-t="comingSoon">Classifica mondiale in preparazione</h3><p data-t="notLive">Il database online non è ancora attivo. Qui vedrai i tempi reali degli altri giocatori, senza risultati inventati.</p><span class="demo" data-t="previewOnly">ANTEPRIMA · NESSUNA CLASSIFICA ONLINE</span></div>
@@ -64,7 +64,7 @@
 </section>
 <section class="screen" id="statsScreen"><div class="screenbar"><button class="back" data-back="home">← <span data-t="home">Home</span></button></div><h2 class="screen-title" data-t="stats">Le mie statistiche</h2><p class="screen-desc" data-t="statsIntro">I tuoi progressi rimangono sul dispositivo.</p><div class="stat-grid"><div><strong id="statWins">0</strong><small data-t="completed">Schemi completati</small></div><div><strong id="statToday">0</strong><small data-t="today">Completati oggi</small></div><div><strong id="statBest">—</strong><small data-t="best">Tempo migliore</small></div><div><strong id="statDaily">0</strong><small data-t="dailyDone">Sfide quotidiane</small></div></div><p class="small-muted" data-t="statsNote">I dati non si sincronizzano fra dispositivi.</p></section>
 </main>
-<footer><div>6 SUDOKU <strong>v0.12.3</strong> · <span data-t="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></div><div><span data-t="author">Ideato e sviluppato da</span> <a href="mailto:ondefx@gmail.com?subject=Info%20per%206sudoku">Alessandro</a></div></footer>
+<footer><div>6 SUDOKU <strong>v0.12.4</strong> · <span data-t="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></div><div><span data-t="author">Ideato e sviluppato da</span> <a href="mailto:ondefx@gmail.com?subject=Info%20per%206sudoku">Alessandro</a></div></footer>
 </div>
 <dialog id="dailyConfirmDialog" class="modal"><div class="modal-body daily-confirm">
  <button class="close" data-close="dailyConfirmDialog" aria-label="Chiudi">×</button>

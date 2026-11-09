@@ -1,5 +1,5 @@
 /* 6 Sudoku v0.12.3: cache coerente, attivazione su conferma */
-const CACHE='6-sudoku-v0123';
+const CACHE='6-sudoku-v0124';
 const FILES=['./','./index.html','./manifest.webmanifest','./css/style.css','./js/sudoku.js','./js/languages.js','./js/app.js','./assets/icon-192.png','./assets/icon-512.png','./assets/apple-touch-icon.png'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)));
