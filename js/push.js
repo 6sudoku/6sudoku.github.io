@@ -1,7 +1,7 @@
 /* 6 Sudoku PROD · Web Push: consenso esplicito, registrazione autenticata. */
 (() => {
  'use strict';
- const VAPID_PUBLIC = "BEBp20oGnQUUOwP-zI3a8em8IK6NcL_Lz2y30PEXYJxDq3xDbE_DOW23jlSiVLcYkMuTbTWrYBW7bJBsOAz4jMo";
+ const VAPID_PUBLIC = "BJ0hG5WC19NtT2ga5PVbClWQ-A7wt0D4iiIV2ksrniHRsOUvU8aYBJSS5XzTzSDDJUkGCvyXzFIlaeNpe9zh4OM";
  const fnName = 'push-self-test';
  const $ = id => document.getElementById(id);
  const tr = key => window.I18N?.[document.getElementById('language')?.value||'it']?.[key] ?? window.I18N?.it?.[key] ?? key;
