@@ -55,7 +55,14 @@
    if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:base64ToBytes(VAPID_PUBLIC)});
    await invoke({action:'subscribe',subscription:sub.toJSON()});
    status('pushActive');await refresh();return true;
-  }catch(e){console.error('6 Sudoku push subscribe error',e);status('pushError');return false;}
+  }catch(e){
+  console.error('6 Sudoku push subscribe error', e);
+  const msg = e?.message || String(e);
+  if ($('pushStatus')) {
+    $('pushStatus').textContent = 'Errore notifiche: ' + msg;
+  }
+  return false;
+  }
   finally{busy=false; $('pushEnableBtn').disabled=false;}
  }
  async function test(){if(busy)return;busy=true;status('pushSending');try{await invoke({action:'test'});status('pushSent')}catch(e){console.error('6 Sudoku push test error',e);status('pushError')}finally{busy=false}}
