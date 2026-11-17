@@ -1,0 +1,34 @@
+6 SUDOKU — PACCHETTO DI PREPARAZIONE PROD v0.12.9.5.8
+
+PACCHETTO CANDIDATO PER TEST SU PROD: le chiavi PUBBLICHE Supabase, VAPID e Turnstile sono inserite. Non aprire ancora al pubblico prima dei collaudi.
+
+1) js/supabase-config.js:
+   publishableKey = configurata con chiave PUBBLICA Supabase PROD.
+   turnstileSiteKey = Site Key PUBBLICA PROD configurata per 6sudoku.github.io.
+   Attenzione: una Site Key di TEST potrebbe non autorizzare il dominio PROD.
+
+2) js/push.js:
+   VAPID_PUBLIC = configurata con la chiave PUBBLICA comunicata per Supabase PROD.
+   Deve corrispondere a VAPID_PUBLIC_KEY nel backend PROD.
+
+NON inserire mai service_role, secret keys, VAPID_PRIVATE_KEY, token di cron o password SMTP nel repository.
+
+Controlli server PROD prima dei test:
+- Authentication: Anonymous Sign-ins abilitati (il codice utilizza signInAnonymously).
+- Turnstile: site key/secret coerenti con Auth CAPTCHA (se abilitato).
+- Auth URL Configuration: https://6sudoku.github.io e redirect autorizzati.
+- Edge Functions pubblicate e segreti PROD impostati.
+- Cron daily-reminders ancora da configurare e collaudare.
+
+Controlli pre-apertura al pubblico:
+- Test su sito ufficiale: profilo, email opzionale/recupero, daily ranking, 1vs1, push, eliminazione profilo, aggiornamento/offline iPhone.
+- Informativa privacy/GDPR definitiva e verifica requisiti per minori: la schermata attuale è PRELIMINARE.
+- Verificare traduzioni e contenuti privacy in tutte le lingue.
+- Pubblicità non inclusa.
+
+Non trasferire file o utenti del database TEST.
+Non modificare o eliminare il progetto TEST.
+
+ATTENZIONE CAPTCHA: Supabase Auth CAPTCHA è attualmente disattivato. Il frontend genera comunque il token Turnstile prima della registrazione anonima e del recupero email; verificare in prova. La Secret Key del widget è apparsa in una schermata: rigenerarla su Cloudflare e configurare la nuova Secret in Supabase PROD prima di attivare CAPTCHA. Non inserirla nello ZIP.
+
+I file dello ZIP sono in radice e devono essere caricati nella RADICE del repository GitHub Pages. Non caricare il file ZIP come singolo elemento.
