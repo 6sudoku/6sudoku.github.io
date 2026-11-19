@@ -4,7 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f7f8f5">
-<meta name="description" content="6 Sudoku · Un piccolo grande gioco di logica. Sfide quotidiane e partite libere.">
+<meta name="description" content="Gioca gratis a 6 Sudoku, il mini Sudoku 6x6 online. Risolvi la sfida quotidiana, scala la classifica mondiale e sfida i tuoi amici.">
+<link rel="canonical" href="https://6sudoku.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="6 Sudoku">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="6 Sudoku – Mini Sudoku 6x6 Online Gratis">
+<meta property="og:description" content="Gioca gratis al mini Sudoku 6x6: sfida quotidiana, classifica mondiale e sfide 1 contro 1 con gli amici.">
+<meta property="og:url" content="https://6sudoku.github.io/">
+<meta property="og:image" content="https://6sudoku.github.io/assets/icon-512.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="6 Sudoku – Mini Sudoku 6x6 Online Gratis">
+<meta name="twitter:description" content="Il mini Sudoku 6x6 gratis: gioca, sfida gli amici e partecipa alla Sfida quotidiana.">
+<meta name="twitter:image" content="https://6sudoku.github.io/assets/icon-512.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"6 Sudoku","url":"https://6sudoku.github.io/","description":"Mini Sudoku 6x6 online gratis con sfida quotidiana, classifica mondiale e sfide 1 contro 1.","applicationCategory":"GameApplication","operatingSystem":"Web, iOS, Android","inLanguage":["it","en","de","fr","zh","ru","ro","pl"],"isAccessibleForFree":true,"sameAs":["https://www.instagram.com/6sudoku/","https://www.tiktok.com/@6sudoku"]}</script>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="6 Sudoku">
@@ -12,7 +25,7 @@
 <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
 <link rel="icon" type="image/png" href="./assets/icon-192.png">
 <link rel="stylesheet" href="./css/style.css">
-<title>6 Sudoku · v0.12.9.5.8</title>
+<title>6 Sudoku – Mini Sudoku 6x6 Online Gratis</title>
 <script src="./js/sudoku.js" defer></script>
 <script src="./js/languages.js" defer></script>
 <script src="./js/supabase-config.js" defer></script>
@@ -29,7 +42,7 @@
 </header>
 <main>
 <section class="screen active" id="home" aria-label="Home">
- <div class="hero"><div class="overline" data-t="tagline">IL TUO PICCOLO GRANDE GIOCO</div><h1 data-t="ready">Sei pronto?</h1><p data-t="intro">Sei numeri, infinite piccole sfide. Un momento tutto per te.</p></div>
+ <div class="hero"><div class="overline" data-t="tagline">IL TUO PICCOLO GRANDE GIOCO</div><h1 class="seo-hero-heading" data-t="seoHeading">6 Sudoku – Mini Sudoku 6×6 Online</h1><p data-t="intro">Sei numeri, infinite piccole sfide. Un momento tutto per te.</p></div>
  <div class="preview" aria-hidden="true"><div class="preview-grid" id="previewGrid"></div></div>
  <section class="daily-feature" aria-labelledby="dailyFeatureHeading">
  <div class="daily-feature-top"><div class="daily-feature-icon" aria-hidden="true">🏆</div><div><div class="daily-feature-eyebrow" data-t="dailyUnique">UNA SOLA OCCASIONE AL GIORNO PER LIVELLO</div><h2 id="dailyFeatureHeading" data-t="daily">Sfida quotidiana</h2></div><span class="daily-feature-pill" data-t="dailyBadge">OGGI</span></div>
@@ -47,7 +60,20 @@
  <div class="install-banner" id="installBanner"><img src="./assets/icon-192.png" width="43" height="43" alt=""><div><strong data-t="install">Installa 6 Sudoku</strong><small data-t="installDesc">Installa l'app per giocare più comodamente.</small></div><button id="installBtn" class="btn primary compact" data-t="installButton">Installa</button></div>
  <div class="update-controls"><button type="button" id="checkUpdatesBtn" class="text-button update-check" data-t="checkUpdates">↻ Controlla aggiornamenti</button><span id="updateFeedback" class="update-feedback" role="status" aria-live="polite"></span></div>
  <div class="home-links"><button class="text-button" id="rulesBtn" data-t="rules">❓ Come si gioca?</button><button class="text-button" id="statsBtn" data-t="stats">📊 Le mie statistiche</button><button class="text-button" id="homeProfileBtn" data-t="homeProfile">👤 Il mio profilo</button><button class="text-button" id="shareAppBtn" data-t="shareApp">📲 Condividi l’app</button></div><button type="button" class="btn secondary received-invite-btn hidden" id="openReceivedInviteBtn" data-t="openReceivedInvite">📩 Apri invito ricevuto</button>
-<button type="button" class="btn secondary hidden" id="vs1PendingInviteBtn" data-t="vs1Pending">⚔️ Condividi la tua sfida</button><button type="button" class="text-button privacy-link" id="privacyHomeBtn" data-t="privacyOpen">🔒 Privacy e sicurezza</button>
+<button type="button" class="btn secondary hidden" id="vs1PendingInviteBtn" data-t="vs1Pending">⚔️ Condividi la tua sfida</button>
+ <section class="seo-about" aria-label="6 Sudoku"><p data-t="seoAbout">Gioca gratis a 6 Sudoku, il piccolo gioco di logica con numeri da 1 a 6. Scegli il tuo livello, risolvi nuovi schemi e partecipa alla Sfida quotidiana per confrontare il tuo risultato con giocatori di tutto il mondo. Completa uno schema e invia una sfida 1 contro 1 a un amico.</p></section>
+ <nav class="social-follow" aria-label="Social 6 Sudoku">
+  <span class="social-follow-label" data-t="socialFollow">Seguici sui social</span>
+  <div class="social-follow-links">
+   <a class="social-follow-link" href="https://www.instagram.com/6sudoku/" target="_blank" rel="noopener noreferrer" aria-label="Instagram 6 Sudoku" title="Instagram">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.2" y="2.2" width="19.6" height="19.6" rx="5.7"/><circle cx="12" cy="12" r="4.25"/><circle cx="17.9" cy="6.3" r="1" fill="currentColor" stroke="none"/></svg><span>Instagram</span>
+   </a>
+   <a class="social-follow-link" href="https://www.tiktok.com/@6sudoku" target="_blank" rel="noopener noreferrer" aria-label="TikTok 6 Sudoku" title="TikTok">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 2.5h-3.1v12.1c0 2.1-1.5 3.7-3.5 3.7-1.7 0-3.1-1.4-3.1-3.2 0-2 1.5-3.4 3.4-3.4.3 0 .6 0 .9.1V8.6a7.3 7.3 0 0 0-1-.1c-4.1 0-6.7 3-6.7 6.6a6.5 6.5 0 0 0 6.6 6.5 6.5 0 0 0 6.5-6.6V8.2a8.2 8.2 0 0 0 4.3 1.2V5.1a5.6 5.6 0 0 1-4.3-2.6Z"/></svg><span>TikTok</span>
+   </a>
+  </div>
+ </nav>
+ <div class="home-bottom-links"><button type="button" class="text-button privacy-link" id="privacyHomeBtn" data-t="privacyOpen">🔒 Privacy e sicurezza</button><a class="text-button support-link" href="mailto:6sudoku@gmail.com?subject=Assistenza%206%20Sudoku" data-t="supportContact">📩 Assistenza</a></div>
 </section>
 <section class="screen" id="game">
  <div class="screenbar"><button class="back" data-back="home">← <span data-t="home">Home</span></button><div class="timer" id="timer">00:00</div></div>
@@ -71,7 +97,7 @@
 </section>
 <section class="screen" id="statsScreen"><div class="screenbar"><button class="back" data-back="home">← <span data-t="home">Home</span></button></div><h2 class="screen-title" data-t="stats">Le mie statistiche</h2><p class="screen-desc" data-t="statsIntro">I tuoi progressi rimangono sul dispositivo.</p><div class="stat-grid"><div><strong id="statWins">0</strong><small data-t="completed">Schemi completati</small></div><div><strong id="statToday">0</strong><small data-t="today">Completati oggi</small></div><div><strong id="statBest">—</strong><small data-t="best">Tempo migliore</small></div><div><strong id="statDaily">0</strong><small data-t="dailyDone">Sfide quotidiane</small></div></div><p class="small-muted" data-t="statsNote">I dati non si sincronizzano fra dispositivi.</p></section>
 </main>
-<footer><div>6 SUDOKU <strong>v0.12.9.5.8</strong> · <span data-t="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></div><div><span data-t="author">Ideato e sviluppato da</span> <a href="mailto:ondefx@gmail.com?subject=Info%20per%206sudoku">Alessandro</a></div></footer>
+<footer><div>6 SUDOKU <strong>v0.12.9.5.9</strong> · <span data-t="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></div><div><span data-t="author">Ideato e sviluppato da</span> <a href="mailto:ondefx@gmail.com?subject=Info%20per%206sudoku">Alessandro</a></div></footer>
 </div>
 
 <dialog id="vs1InviteDialog" class="modal"><div class="modal-body win-modal">
