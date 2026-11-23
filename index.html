@@ -35,6 +35,7 @@
 <script src="./js/daily-reminder.js" defer></script>
 <script src="./js/app.js" defer></script>
 <script src="./js/vs1-guide.js" defer></script>
+<script src="./js/daily-guide.js" defer></script>
 </head>
 <body>
 <div class="app">
@@ -112,7 +113,7 @@
 </section>
 <section class="screen" id="statsScreen"><div class="screenbar"><button class="back" data-back="home">← <span data-t="home">Home</span></button></div><h2 class="screen-title" data-t="stats">Le mie statistiche</h2><p class="screen-desc" data-t="statsIntro">I tuoi progressi rimangono sul dispositivo.</p><div class="stat-grid"><div><strong id="statWins">0</strong><small data-t="completed">Schemi completati</small></div><div><strong id="statToday">0</strong><small data-t="today">Completati oggi</small></div><div><strong id="statBest">—</strong><small data-t="best">Tempo migliore</small></div><div><strong id="statDaily">0</strong><small data-t="dailyDone">Sfide quotidiane</small></div></div><p class="small-muted" data-t="statsNote">I dati non si sincronizzano fra dispositivi.</p></section>
 </main>
-<footer><div>6 SUDOKU <strong>v0.12.9.5.16</strong> · <span data-t="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></div><div><span data-t="author">Ideato e sviluppato da</span> <a href="mailto:ondefx@gmail.com?subject=Info%20per%206sudoku">Alessandro</a></div></footer>
+<footer><div>6 SUDOKU <strong>v0.12.9.5.17</strong> · <span data-t="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></div><div><span data-t="author">Ideato e sviluppato da</span> <a href="mailto:ondefx@gmail.com?subject=Info%20per%206sudoku">Alessandro</a></div></footer>
 </div>
 
 <dialog id="vs1InviteDialog" class="modal"><div class="modal-body win-modal">
@@ -178,14 +179,29 @@
  <h2 id="vs1CreatedHeading" data-t="vs1CreatedTitle">La tua partita è registrata!</h2><p id="vs1CreatedIntro" class="modal-intro" data-t="vs1CreatedBody">Il server ha verificato lo schema e il tuo tempo. Ora puoi invitare un amico con il link della tua sfida!</p>
  <div id="vs1CreatedDetails"><div id="vs1CreatedDifficulty" class="vs1-difficulty"></div><div class="final-time" id="vs1CreatedTime">—:—</div><div class="vs1-stake-banner" id="vs1CreatedStakeBox"><strong data-t="vs1StakeActive">🔥 Chi perde paga!</strong><p id="vs1CreatedStake"></p></div></div><div class="vs1-countdown" id="vs1CountdownBox" aria-live="off"><span data-t="vs1TimeLeft">⏳ Tempo per accettare</span><strong id="vs1Countdown" role="timer">--:--</strong></div><div id="vs1PlayingNotice" class="vs1-status-note hidden" role="status" data-t="vs1OpponentPlaying">⚔️ Il tuo amico sta giocando!</div><div id="vs1CompletedPanel" class="vs1-completed-panel hidden"><h3 id="vs1CreatorResultTitle">🏆 Risultato</h3><p id="vs1CreatorResultAgainst" class="vs1-result-against"></p><div class="vs1-score-pair"><div><small data-t="vs1You">Tu</small><strong id="vs1CreatorResultMyTime">—</strong></div><div><small id="vs1CreatorResultName">Amico</small><strong id="vs1CreatorResultTheirTime">—</strong></div></div><p id="vs1CreatorResultGap" class="vs1-result-story"></p><p id="vs1CreatorResultReward" class="vs1-result-reward"></p></div><div class="vs1-link-wrap" id="vs1ShareLinkWrap"><input id="vs1ShareLink" aria-label="Link della sfida" readonly></div><button class="btn primary" type="button" id="vs1ShareBtn" data-t="vs1Share">📤 Condividi la sfida</button><button class="btn secondary" type="button" id="vs1CopyBtn" data-t="vs1Copy">🔗 Copia link</button><p id="vs1ShareStatus" role="status" class="profile-help"></p><button class="btn secondary vs1-cancel" type="button" id="vs1CancelInvite" data-t="vs1CancelInvite">❌ Annulla sfida</button><button class="btn primary" type="button" id="vs1CreatedHome" data-t="home">Home</button></div></dialog>
 
-<dialog id="dailyConfirmDialog" class="modal"><div class="modal-body daily-confirm">
+<dialog id="dailyConfirmDialog" class="modal"><div class="modal-body daily-confirm daily-comic-modal">
  <button class="close" data-close="dailyConfirmDialog" aria-label="Chiudi">×</button>
- <div class="modal-emblem">🏆</div><h2 data-t="daily">Sfida quotidiana</h2>
- <div class="daily-confirm-level" id="dailyConfirmLevel">ZEN</div>
- <p class="modal-intro" data-t="dailyConfirmIntro">Hai una sola occasione al giorno per questo livello.</p>
- <div class="daily-confirm-rules"><p data-t="dailyConfirmSame">✓ Tutti affrontano lo stesso schema.</p><p data-t="dailyConfirmOne">✓ Il tentativo viene utilizzato quando premi Inizia.</p><p data-t="dailyConfirmResume">✓ Se interrompi la partita, puoi riprendere lo stesso tentativo.</p><p data-t="dailyConfirmNoHints">✓ Nessun suggerimento durante la Sfida quotidiana.</p></div>
- <button id="dailyConfirmStart" class="btn primary" data-t="dailyStart">Inizia la sfida</button>
- <button class="btn secondary" data-close="dailyConfirmDialog" data-t="cancel">Annulla</button>
+ <section id="dailySetupView">
+  <div class="modal-emblem" aria-hidden="true">🏆</div><h2 data-t="daily">Sfida quotidiana</h2>
+  <div class="daily-comic-teaser" aria-hidden="true"><img src="./assets/daily/ragazzo-presenta.webp" alt="" width="130" height="130"><img class="daily-comic-logo" src="./assets/icon-192.png" alt="" width="90" height="90"><img src="./assets/daily/ragazza-presenta.webp" alt="" width="130" height="130"></div>
+  <p class="daily-comic-lead" data-t="dailyComicLead">Uno schema uguale per tutti. Una sola possibilità per ciascun livello.</p>
+  <div class="daily-confirm-level" id="dailyConfirmLevel">ZEN</div>
+  <p class="daily-comic-tip" data-t="dailyComicTip">📅 Ogni livello si gioca una sola volta al giorno.</p>
+  <details class="daily-extra-rules"><summary data-t="dailyComicRules">Regole e ripresa della partita</summary><div class="daily-confirm-rules"><p data-t="dailyConfirmSame">✓ Tutti affrontano lo stesso schema.</p><p data-t="dailyConfirmOne">✓ Il tentativo viene utilizzato quando premi Inizia.</p><p data-t="dailyConfirmResume">✓ Se interrompi la partita, puoi riprendere lo stesso tentativo.</p><p data-t="dailyConfirmNoHints">✓ Nessun suggerimento durante la Sfida quotidiana.</p></div></details>
+  <button id="dailyGuideOpen" type="button" class="btn daily-guide-open" data-t="dailyGuideOpen">📖 Come funziona?</button>
+  <button id="dailyConfirmStart" class="btn primary" data-t="dailyStart">Inizia la sfida</button>
+  <button class="btn secondary" data-close="dailyConfirmDialog" data-t="cancel">Annulla</button>
+ </section>
+ <section id="dailyGuideView" hidden aria-labelledby="dailyGuideHeading">
+  <div class="modal-emblem" aria-hidden="true">📖</div><h2 id="dailyGuideHeading" data-t="dailyGuideHeading">Come funziona?</h2>
+  <div class="daily-comic-top" aria-hidden="true"><img src="./assets/daily/ragazzo-presenta.webp" alt="" width="90" height="90"><img src="./assets/daily/ragazza-presenta.webp" alt="" width="90" height="90"></div>
+  <div class="daily-guide-steps">
+   <article class="daily-guide-step"><span class="daily-guide-number">1</span><div class="daily-guide-text" data-t="dailyGuideStep1">Stesso schema per tutti</div><img src="./assets/daily/stesso-schema.webp" alt="" width="155" height="120" loading="lazy"></article>
+   <article class="daily-guide-step"><span class="daily-guide-number">2</span><div class="daily-guide-text" data-t="dailyGuideStep2">Un solo tentativo al giorno per livello</div><img src="./assets/daily/un-tentativo.webp" alt="" width="155" height="120" loading="lazy"></article>
+   <article class="daily-guide-step"><span class="daily-guide-number">3</span><div class="daily-guide-text" data-t="dailyGuideStep3">Entra nella classifica mondiale</div><img src="./assets/daily/classifica.webp" alt="" width="155" height="120" loading="lazy"></article>
+  </div>
+  <button id="dailyGuideBack" class="btn primary" type="button" data-t="dailyGuideBack">← Torna alla sfida</button>
+ </section>
  </div></dialog>
 <dialog id="updateDialog" class="modal"><div class="modal-body"><div class="modal-emblem" aria-hidden="true">↻</div><h2 data-t="updateTitle">Aggiornamento disponibile</h2><p id="updateDescription" class="modal-intro"></p><div class="update-actions"><button type="button" id="updateLater" class="btn secondary" data-t="updateLater">Più tardi</button><button type="button" id="updateNow" class="btn primary" data-t="updateNow">Aggiorna ora</button></div></div></dialog>
 <dialog id="rulesDialog" class="modal"><div class="modal-body"><button class="close" data-close="rulesDialog" aria-label="Chiudi">×</button><h2 data-t="rulesTitle">Come si gioca?</h2><div id="rulesContent"></div><button class="btn primary" data-close="rulesDialog" data-t="understood">Ho capito</button></div></dialog>
@@ -223,7 +239,15 @@
 <div class="profile-section"><button type="button" class="btn secondary" id="privacyProfileBtn" data-t="privacyOpen">🔒 Privacy e sicurezza</button></div>
 <button class="btn primary" id="profileDoneBtn" type="button" data-t="profileDone">Torna al gioco</button></div></form></div></dialog>
 <dialog id="winDialog" class="modal"><div class="modal-body win-modal"><div class="confetti-icon">🏆</div><div class="overline" data-t="completedTitle">SCHEMA COMPLETATO</div><h2 data-t="congrats">Complimenti!</h2><div class="final-time" id="winTime">00:00</div><p id="winDetails"></p><p class="feedback" id="winCompare"></p><button class="btn primary hidden" id="winRanking">Visualizza classifica mondiale</button><button class="btn secondary" id="winShare">🔥 Lancia la sfida!</button><button class="btn secondary" id="winNew" data-t="newGame">Nuova partita</button><button class="text-button" id="winHome" data-t="home">Home</button></div></dialog>
-<dialog id="dailyAlreadyDialog" class="modal"><div class="modal-body win-modal"><div class="confetti-icon">🏆</div><h2 id="dailyAlreadyTitle">Sfida già completata!</h2><p id="dailyAlreadyBody" class="modal-intro"></p><div class="final-time" id="dailyAlreadyTime">—:—</div><button type="button" class="btn primary" id="dailyAlreadyRanking">Visualizza classifica mondiale</button><button type="button" class="btn secondary" id="dailyAlreadyShare">🔥 Lancia la sfida!</button><button type="button" class="text-button" id="dailyAlreadyHome" data-t="home">Home</button></div></dialog>
+<dialog id="dailyAlreadyDialog" class="modal"><div class="modal-body win-modal daily-comic-result">
+ <div class="daily-result-art" aria-hidden="true"><img src="./assets/daily/completata.webp" alt="" width="300" height="160" loading="lazy"></div>
+ <h2 id="dailyAlreadyTitle" class="daily-result-title">Sfida già completata!</h2>
+ <p id="dailyAlreadyBody" class="modal-intro"></p>
+ <div class="daily-result-stats"><div class="daily-result-stat"><span data-t="dailyResultTimeLabel">⏱️ Il tuo tempo</span><div class="final-time" id="dailyAlreadyTime">—:—</div></div><div class="daily-result-stat"><span data-t="dailyResultLevelLabel">Livello</span><strong id="dailyAlreadyLevel">ZEN 🌱</strong></div></div>
+ <button type="button" class="btn primary" id="dailyAlreadyRanking">Visualizza classifica mondiale</button>
+ <button type="button" class="btn secondary" id="dailyAlreadyShare">🔥 Lancia la sfida!</button>
+ <button type="button" class="text-button" id="dailyAlreadyHome" data-t="home">Home</button>
+ </div></dialog>
 <dialog id="dailyInviteDialog" class="modal"><div class="modal-body win-modal"><div class="confetti-icon">🔥</div><h2 id="inviteTitle">Ti hanno lanciato una sfida!</h2><p class="modal-intro" id="inviteBody"></p><div id="iosInviteHandoff" class="hidden"><strong id="iosInviteQuestion"></strong><div class="ios-invite-steps"><div class="ios-step"><span class="ios-step-n">1</span><span id="iosStepOne"></span></div><div class="ios-step"><span class="ios-step-n">2</span><img src="./assets/icon-192.png" width="45" height="45" alt="6 Sudoku" class="ios-app-icon"><span id="iosStepTwo"></span></div><div class="ios-step"><span class="ios-step-n">3</span><span id="iosStepThree"></span></div></div><p class="modal-intro hidden" id="iosInviteHelp"></p><button type="button" class="btn primary" id="iosInviteCopy"></button><p class="profile-help" id="iosInviteNew"></p></div><button type="button" class="btn primary" id="inviteStart">Partecipa alla sfida</button><button type="button" class="btn secondary" id="inviteHome" data-t="inviteBrowserHome">Torna al gioco nel browser</button></div></dialog>
 <dialog id="privacyDialog" class="modal"><div class="modal-body privacy-modal">
 <button type="button" class="close" data-close="privacyDialog" aria-label="Chiudi">×</button>
