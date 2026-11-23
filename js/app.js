@@ -2,7 +2,7 @@
 (() => {
 'use strict';
 const $=id=>document.getElementById(id), E=window.SudokuEngine;
-const APP_VERSION='0.12.9.5.16', VERSION_URL='./version.json';
+const APP_VERSION='0.12.9.5.17', VERSION_URL='./version.json';
 const STORE='6sudoku-prod-v012-state', LANGKEY='6sudoku-prod-lang', PROFILEKEY='6sudoku-prod-profile';
 const LEVELS=['beginner','intermediate','advanced','hero'];
 const LEVEL_LABELS={beginner:'🌱 ZEN',intermediate:'⚡ FOCUS',advanced:'💪 MASTER',hero:'👑 HERO'};
@@ -533,6 +533,7 @@ function showAlreadyDone(chosen,score){
  $('dailyAlreadyTitle').textContent=ui('alreadyTitle',{level:levelLabel(chosen)});
  $('dailyAlreadyBody').textContent=ui('alreadyBody');
  $('dailyAlreadyTime').textContent=Number.isFinite(score)?format(score):'—:—';
+ $('dailyAlreadyLevel').textContent=levelLabel(chosen);
  $('dailyAlreadyShare').classList.toggle('hidden',!Number.isFinite(score));
  closeDialog('dailyConfirmDialog');openDialog('dailyAlreadyDialog');
 }
