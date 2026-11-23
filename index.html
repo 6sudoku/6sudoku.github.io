@@ -34,6 +34,7 @@
 <script src="./js/push.js" defer></script>
 <script src="./js/daily-reminder.js" defer></script>
 <script src="./js/app.js" defer></script>
+<script src="./js/vs1-guide.js" defer></script>
 </head>
 <body>
 <div class="app">
@@ -111,7 +112,7 @@
 </section>
 <section class="screen" id="statsScreen"><div class="screenbar"><button class="back" data-back="home">← <span data-t="home">Home</span></button></div><h2 class="screen-title" data-t="stats">Le mie statistiche</h2><p class="screen-desc" data-t="statsIntro">I tuoi progressi rimangono sul dispositivo.</p><div class="stat-grid"><div><strong id="statWins">0</strong><small data-t="completed">Schemi completati</small></div><div><strong id="statToday">0</strong><small data-t="today">Completati oggi</small></div><div><strong id="statBest">—</strong><small data-t="best">Tempo migliore</small></div><div><strong id="statDaily">0</strong><small data-t="dailyDone">Sfide quotidiane</small></div></div><p class="small-muted" data-t="statsNote">I dati non si sincronizzano fra dispositivi.</p></section>
 </main>
-<footer><div>6 SUDOKU <strong>v0.12.9.5.14</strong> · <span data-t="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></div><div><span data-t="author">Ideato e sviluppato da</span> <a href="mailto:ondefx@gmail.com?subject=Info%20per%206sudoku">Alessandro</a></div></footer>
+<footer><div>6 SUDOKU <strong>v0.12.9.5.16</strong> · <span data-t="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></div><div><span data-t="author">Ideato e sviluppato da</span> <a href="mailto:ondefx@gmail.com?subject=Info%20per%206sudoku">Alessandro</a></div></footer>
 </div>
 
 <dialog id="vs1InviteDialog" class="modal"><div class="modal-body win-modal">
@@ -132,7 +133,13 @@
 <button class="btn primary" id="vs1ResultHome" type="button" data-t="home">Home</button></div></dialog>
 <dialog id="vs1SetupDialog" class="modal"><div class="modal-body">
  <button type="button" class="close" data-close="vs1SetupDialog" aria-label="Chiudi">×</button>
+ <section id="vs1SetupView">
  <div class="modal-emblem">⚔️</div><h2 data-t="vs1Title">Sfida 1 VS 1</h2>
+ <div class="vs1-comic-teaser" aria-hidden="true">
+   <img class="vs1-teaser-man" src="./assets/1vs1/ragazzo-pollice.webp" alt="" width="110" height="110">
+   <img class="vs1-teaser-logo" src="./assets/icon-192.png" alt="" width="75" height="75">
+   <img class="vs1-teaser-woman" src="./assets/1vs1/ragazza-indica.webp" alt="" width="110" height="110">
+  </div>
  <p class="modal-intro" data-t="vs1Intro">Gioca tu per primo. Il tuo tempo sarà registrato sul server. Dopo aver completato il Sudoku, potrai invitare un amico.</p>
  <p class="profile-help" data-t="vs1Rule">Una sola partita aperta per volta. Nessun suggerimento.</p>
  <label for="vs1Stake" data-t="vs1StakeLabel">🔥 Chi perde paga! (facoltativo)</label>
@@ -146,12 +153,26 @@
  <option value="custom" data-t="vs1Custom">✍️ Scrivi tu!</option>
  </select>
  <div id="vs1CustomRow" hidden><label for="vs1CustomText" data-t="vs1CustomLabel">La tua frase divertente</label><textarea id="vs1CustomText" rows="2" maxlength="150"></textarea><p class="profile-help"><span id="vs1Count">0</span>/150</p></div>
- <label class="profile-check" style="margin:16px 0"><input id="vs1Notify" type="checkbox"><span data-t="vs1Notify">🔔 Avvisami quando l'amico ha giocato (Sì/No)</span></label>
+ <label class="profile-check vs1-notify-choice"><input id="vs1Notify" type="checkbox"><span data-t="vs1Notify">🔔 Avvisami quando l'amico ha giocato (Sì/No)</span></label>
  <p class="vs1-notify-help" data-t="vs1NotifyAutoInfo">Scegliendo Sì attivi anche le notifiche nel profilo. Le notifiche sul dispositivo richiedono il suo permesso.</p>
  <p id="vs1NotifyFeedback" class="vs1-notify-feedback" role="status" aria-live="polite"></p>
  <p id="vs1Status" class="profile-help" role="status"></p>
+ <button id="vs1GuideOpen" class="btn vs1-guide-open" type="button" data-t="vs1GuideOpen">📖 Come funziona?</button>
  <button id="vs1Start" class="btn primary" type="button" data-t="vs1Start">⚔️ Gioca e prepara la sfida</button>
  <button class="btn secondary" type="button" data-close="vs1SetupDialog" data-t="cancel">Annulla</button>
+ </section>
+ <section id="vs1GuideView" hidden aria-labelledby="vs1GuideHeading">
+  <div class="modal-emblem" aria-hidden="true">📖</div>
+  <h2 id="vs1GuideHeading" data-t="vs1GuideHeading">Come funziona la sfida?</h2>
+  <p class="vs1-guide-lead" data-t="vs1GuideLead">Sfida un amico in 3 semplici passi.</p>
+  <div class="vs1-guide-steps">
+   <article class="vs1-guide-step"><span class="vs1-step-number">1</span><div class="vs1-step-copy" data-t="vs1GuideStep1">Gioca tu per primo</div><img src="./assets/1vs1/ragazzo-gioca.webp" alt="" width="110" height="110" loading="lazy"></article>
+   <article class="vs1-guide-step"><span class="vs1-step-number">2</span><div class="vs1-step-copy" data-t="vs1GuideStep2">Invia il link a un amico</div><img src="./assets/1vs1/ragazza-invia.webp" alt="" width="110" height="110" loading="lazy"></article>
+   <article class="vs1-guide-step vs1-guide-step-finale"><span class="vs1-step-number">3</span><div class="vs1-step-copy" data-t="vs1GuideStep3">Quando gioca, scoprite subito chi ha vinto!</div><img class="vs1-finale-art" src="./assets/1vs1/festeggiano.webp" alt="" width="210" height="105" loading="lazy"></article>
+  </div>
+  <p class="vs1-guide-note" data-t="vs1GuideNote">Se vuoi, puoi attivare l'avviso quando l'amico ha giocato.</p>
+  <button id="vs1GuideBack" class="btn primary" type="button" data-t="vs1GuideBack">← Torna alla sfida</button>
+ </section>
  </div></dialog>
 <dialog id="vs1CreatedDialog" class="modal"><div class="modal-body win-modal"><div class="confetti-icon">⚔️</div>
  <h2 id="vs1CreatedHeading" data-t="vs1CreatedTitle">La tua partita è registrata!</h2><p id="vs1CreatedIntro" class="modal-intro" data-t="vs1CreatedBody">Il server ha verificato lo schema e il tuo tempo. Ora puoi invitare un amico con il link della tua sfida!</p>

@@ -1,0 +1,24 @@
+6 SUDOKU — Aggiornamento Sfida 1 VS 1 — versione 0.12.9.5.16
+
+RIFERIMENTO GRAFICO: anteprima a due viste approvata dall'utente.
+
+MODIFICHE
+- La finestra Sfida 1 VS 1 mostra ragazzo con pollice alzato, logo al centro e ragazza che indica.
+- «Come funziona?» mostra tre vignette con pose nuove e corrispondenti alle azioni: giocare, condividere il link, festeggiare.
+- La riga «Avvisami quando l'amico ha giocato» mantiene evidenziazione rosso corallo.
+- Le cinque nuove immagini ottimizzate WebP sono ordinate in assets/1vs1/.
+- Le immagini usate in Home restano in assets/ senza modifiche.
+- Nuovi testi e pulsanti sfruttano le chiavi I18N già tradotte nelle 8 lingue.
+- Nessuna modifica alla logica 1vs1, a Supabase, notifiche o gioco.
+
+ISTRUZIONI
+1) Eseguire backup del repository main GitHub prima di caricare.
+2) Controllare che il main attuale sia v0.12.9.5.15 e non contenga modifiche ulteriori.
+3) Caricare rispettando le cartelle e i percorsi, inclusa assets/1vs1/.
+4) Verificare su PC e iPhone entrambe le viste, le 8 lingue e il flusso avvio sfida.
+5) Non modificare file di produzione Supabase.
+
+ANTEPRIMA LOCALE
+Aprire 6Sudoku-ANTEPRIMA-1VS1-v0.12.9.5.16.html: demo indipendente dal backend, il pulsante avvio non crea sfide.
+
+Nota: l'anteprima originale è il riferimento approvato; le nuove pose sono state create appositamente per le cinque illustrazioni, senza riutilizzare la tazzina della Home.
