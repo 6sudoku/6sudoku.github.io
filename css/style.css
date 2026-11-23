@@ -199,3 +199,39 @@
 @keyframes home-woman-greeting{0%,100%{transform:rotate(0)}45%{transform:rotate(3deg)}}
 @media(max-width:375px){#home .testimonial-stage{height:196px}#home .testimonial-stage .preview{flex-basis:162px;padding:9px}#home .testimonial-person{width:132px;max-height:185px}#home .testimonial-man{left:-10px}#home .testimonial-woman{right:-10px}}
 @media(prefers-reduced-motion:reduce){#home .testimonial-person,#home .testimonial-stage.testimonial-in-view .testimonial-person{animation:none!important;transform:none!important;opacity:1}}
+
+/* 0.12.9.5.15 — Solo presentazione della Sfida 1 VS 1. */
+#vs1SetupDialog .modal-body{overflow-y:auto;overscroll-behavior:contain}
+#vs1SetupDialog [hidden]{display:none!important}
+#vs1SetupDialog .vs1-comic-teaser{display:flex;align-items:end;justify-content:center;gap:10px;height:91px;margin:-2px 0 10px;overflow:hidden;background:linear-gradient(0deg,#f0f7ef,transparent);border-radius:14px}
+#vs1SetupDialog .vs1-comic-teaser img{width:88px;height:102px;object-fit:contain;object-position:bottom;align-self:end}
+#vs1SetupDialog .vs1-comic-mark{font-size:24px;align-self:center;color:#4c7656}
+#vs1SetupDialog .vs1-notify-choice{display:flex;align-items:center;gap:9px;border:1px solid #edbcb4;border-radius:13px;background:#fff0ed;margin:16px 0 12px!important;padding:13px 10px;color:#ad261c}
+#vs1SetupDialog .vs1-notify-choice input{flex:0 0 22px;width:22px;height:22px;min-width:22px;margin:0;accent-color:#be3c30}
+#vs1SetupDialog .vs1-notify-choice span{font-weight:850;font-size:clamp(12px,3.2vw,14px);line-height:1.35;color:#b62b20;overflow-wrap:anywhere}
+#vs1SetupDialog .vs1-guide-open{background:#e9f3e8;color:#245131;border:1px solid #bfd5bd;margin-top:8px}
+#vs1SetupDialog .vs1-guide-lead{text-align:center;font-size:13px;color:#65746b;margin:0 0 15px}
+#vs1SetupDialog .vs1-guide-steps{display:grid;gap:10px}
+#vs1SetupDialog .vs1-guide-step{position:relative;display:flex;align-items:center;gap:7px;min-height:104px;padding:9px 9px 9px 47px;border:1px solid #bcd7bb;background:linear-gradient(110deg,#f8fcf6,#eef7e8);border-radius:15px;overflow:hidden}
+#vs1SetupDialog .vs1-step-number{position:absolute;left:10px;top:12px;width:27px;height:27px;display:grid;place-items:center;border-radius:50%;font-size:15px;font-weight:850;color:white;background:#3e7a47}
+#vs1SetupDialog .vs1-step-copy{flex:1;min-width:0;font-weight:800;color:#244b30;font-size:clamp(13px,3.5vw,16px);line-height:1.25;overflow-wrap:anywhere}
+#vs1SetupDialog .vs1-guide-step img{flex:0 0 80px;width:80px;height:105px;object-fit:contain;object-position:bottom;margin:-9px -6px -9px 0}
+#vs1SetupDialog .vs1-step-result{font-size:50px;flex:0 0 72px;text-align:center}
+#vs1SetupDialog .vs1-guide-note{text-align:center;background:#f2f6ee;border-radius:12px;padding:12px;color:#516957;font-size:12px;line-height:1.5}
+#vs1SetupDialog #vs1GuideBack{margin-top:12px}
+@media(max-width:360px){#vs1SetupDialog .vs1-guide-step{padding-left:39px}#vs1SetupDialog .vs1-guide-step img{flex-basis:65px;width:65px}#vs1SetupDialog .vs1-step-copy{font-size:12px}#vs1SetupDialog .vs1-notify-choice{padding:11px 8px}}
+
+/* v0.12.9.5.16 — illustrazioni approvate 1vs1, indipendenti dalla Home. */
+#vs1SetupDialog .vs1-comic-teaser{height:clamp(100px,27vw,140px);margin:3px 0 9px;display:flex;align-items:flex-end;justify-content:space-evenly;gap:2px;background:linear-gradient(0deg,#eef6ec,transparent 70%);border-radius:16px;overflow:hidden}
+#vs1SetupDialog .vs1-comic-teaser img.vs1-teaser-man,
+#vs1SetupDialog .vs1-comic-teaser img.vs1-teaser-woman{align-self:end;width:36%;height:100%;max-width:135px;object-fit:contain;object-position:center bottom;margin:0}
+#vs1SetupDialog .vs1-comic-teaser img.vs1-teaser-logo{width:23%;max-width:80px;height:auto;align-self:center;object-fit:contain;margin:0 0 4px}
+#vs1SetupDialog .vs1-guide-steps{gap:9px}
+#vs1SetupDialog .vs1-guide-step{min-height:108px;padding:8px 5px 0 45px;align-items:center;background:linear-gradient(105deg,#fcfff7,#edf6e6);border-radius:17px}
+#vs1SetupDialog .vs1-guide-step .vs1-step-number{z-index:2}
+#vs1SetupDialog .vs1-guide-step img{height:110px;width:38%;max-width:118px;flex:0 0 38%;margin:0;object-fit:contain;object-position:center bottom;align-self:end}
+#vs1SetupDialog .vs1-guide-step .vs1-step-copy{font-size:clamp(12px,3.45vw,16px);line-height:1.25;position:relative;z-index:1}
+#vs1SetupDialog .vs1-guide-step-finale img.vs1-finale-art{width:48%;max-width:185px;flex-basis:48%;height:104px}
+#vs1SetupDialog .vs1-notify-choice{background:#fff0ed;border-color:#edbcb4}
+#vs1SetupDialog .vs1-notify-choice span{color:#bd2b20}
+@media(max-width:360px){#vs1SetupDialog .vs1-guide-step{min-height:99px;padding-left:38px}#vs1SetupDialog .vs1-guide-step img{height:100px;flex-basis:37%;width:37%}#vs1SetupDialog .vs1-guide-step-finale img.vs1-finale-art{height:98px;flex-basis:47%;width:47%}}
