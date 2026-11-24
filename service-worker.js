@@ -1,7 +1,7 @@
 /* 6 Sudoku PROD v0.12.9.5.14 — aggiornamento sicuro e cache offline. */
-const APP_VERSION='0.12.9.5.20';
-const CACHE='6-sudoku-prod-v0129-5-20';
-const FILES=['./','./index.html','./manifest.webmanifest','./css/style.css','./js/sudoku.js','./js/languages.js','./js/app.js','./js/analytics-consent.js','./js/vs1-guide.js','./js/daily-guide.js','./js/supabase-config.js','./js/supabase-profile.js','./js/push.js','./js/daily-reminder.js','./assets/install-iphone-hero.webp','./assets/icon-192.png','./assets/icon-512.png','./assets/apple-touch-icon.png','./favicon-48.png','./assets/ragazzo-smartphone.webp','./assets/ragazza-caffe.webp','./assets/1vs1/ragazzo-pollice.webp','./assets/1vs1/ragazza-indica.webp','./assets/1vs1/ragazzo-gioca.webp','./assets/1vs1/ragazza-invia.webp','./assets/1vs1/festeggiano.webp','./assets/daily/ragazzo-presenta.webp','./assets/daily/ragazza-presenta.webp','./assets/daily/stesso-schema.webp','./assets/daily/un-tentativo.webp','./assets/daily/classifica.webp','./assets/daily/completata.webp'];
+const APP_VERSION='0.12.9.5.21';
+const CACHE='6-sudoku-prod-v0129-5-21';
+const FILES=['./','./index.html','./manifest.webmanifest','./css/style.css','./js/sudoku.js','./js/languages.js','./js/app.js','./js/analytics-consent.js','./js/vs1-guide.js','./js/daily-guide.js','./js/supabase-config.js','./js/supabase-profile.js','./js/push.js','./js/daily-reminder.js','./assets/install-iphone-hero.webp','./assets/privacy-ragazza.webp','./assets/icon-192.png','./assets/icon-512.png','./assets/apple-touch-icon.png','./favicon-48.png','./assets/ragazzo-smartphone.webp','./assets/ragazza-caffe.webp','./assets/1vs1/ragazzo-pollice.webp','./assets/1vs1/ragazza-indica.webp','./assets/1vs1/ragazzo-gioca.webp','./assets/1vs1/ragazza-invia.webp','./assets/1vs1/festeggiano.webp','./assets/daily/ragazzo-presenta.webp','./assets/daily/ragazza-presenta.webp','./assets/daily/stesso-schema.webp','./assets/daily/un-tentativo.webp','./assets/daily/classifica.webp','./assets/daily/completata.webp'];
 const SCOPE=new URL(self.registration.scope);
 self.addEventListener('install',event=>{
  event.waitUntil((async()=>{

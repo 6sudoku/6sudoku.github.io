@@ -311,15 +311,31 @@
 <dialog id="shareDialog" class="modal"><div class="modal-body"><button class="close" data-close="shareDialog" aria-label="Chiudi">×</button><h2 data-t="shareTitle">Condividi 6 Sudoku</h2><p data-t="shareDesc">Invia il link a un amico.</p><button class="btn primary" id="whatsappBtn" data-t="whatsapp">Invia su WhatsApp</button><button class="btn secondary" id="nativeShareBtn" data-t="shareMenu">Altri social</button><button class="btn secondary" id="copyLinkBtn" data-t="copyLink">Copia link</button></div></dialog>
 <dialog id="analyticsConsentDialog" class="modal analytics-consent-dialog" aria-labelledby="analyticsConsentTitle" aria-describedby="analyticsConsentDescription">
  <div class="modal-body analytics-consent-body">
-  <div class="analytics-consent-symbol" aria-hidden="true">🧩</div>
-  <h2 id="analyticsConsentTitle" data-analytics-t="bannerTitle">La tua privacy conta</h2>
-  <p id="analyticsConsentDescription" data-analytics-t="bannerBody">Possiamo usare Google Analytics 4 per capire come viene utilizzato 6 Sudoku e migliorarlo? È facoltativo: puoi giocare anche se rifiuti. Nessuna pubblicità viene attivata.</p>
-  <p class="analytics-consent-details" data-analytics-t="bannerDetails">Se accetti, Google può usare cookie analitici e ricevere informazioni di utilizzo. Non inviamo nickname, email, identificativi del giocatore o link di sfida. Puoi cambiare idea da «Privacy e sicurezza».</p>
-  <div class="analytics-consent-actions">
-   <button type="button" id="analyticsDecline" class="btn secondary" data-analytics-t="decline">Rifiuta Analytics</button>
-   <button type="button" id="analyticsAccept" class="btn primary" data-analytics-t="accept">Accetta Analytics</button>
-  </div>
-  <button type="button" id="analyticsReadPrivacy" class="text-button analytics-privacy-action" data-analytics-t="readPrivacy">Leggi Privacy e sicurezza</button>
+  <section id="analyticsConsentMain">
+   <div class="analytics-consent-symbol" aria-hidden="true">🧩</div>
+   <h2 id="analyticsConsentTitle" data-analytics-t="bannerTitle">La tua privacy conta</h2>
+   <div class="analytics-consent-compact">
+    <img class="analytics-consent-character" src="./assets/privacy-ragazza.webp" alt="" aria-hidden="true" width="116" height="116" loading="eager">
+    <p id="analyticsConsentDescription" data-analytics-t="bannerBody">Usiamo strumenti necessari al gioco. Solo con il tuo consenso, Google Analytics 4 ci aiuta a capire come viene utilizzato 6 Sudoku. Puoi giocare anche se rifiuti.</p>
+   </div>
+   <div class="analytics-consent-actions">
+    <button type="button" id="analyticsDecline" class="btn secondary" data-analytics-t="decline">Rifiuta</button>
+    <button type="button" id="analyticsAccept" class="btn primary" data-analytics-t="accept">Accetta</button>
+   </div>
+   <nav class="analytics-consent-links" aria-label="Informazioni sulla privacy">
+    <button type="button" id="analyticsReadPrivacy" class="text-button analytics-privacy-action" data-analytics-t="readPrivacy">Leggi Privacy</button>
+    <button type="button" id="analyticsReadDetails" class="text-button analytics-privacy-action" data-analytics-t="readAnalytics">Leggi Analytics</button>
+   </nav>
+  </section>
+  <section id="analyticsConsentDetails" class="analytics-consent-info" hidden aria-labelledby="analyticsDetailTitle">
+   <h2 id="analyticsDetailTitle" data-analytics-t="detailTitle">Google Analytics 4: informazioni</h2>
+   <p data-analytics-t="detailPurpose">Con il tuo consenso, Google Analytics 4 raccoglie informazioni sull'uso del sito e sugli eventi di gioco, per aiutarci a migliorare 6 Sudoku.</p>
+   <p data-analytics-t="detailData">Possibili dati: pagine visitate, tipo di dispositivo, dati tecnici e cookie analitici, modalità, livello e durata della partita. Non inviamo nickname, email, identificativi personali o link di invito.</p>
+   <p data-analytics-t="detailChoice">Il consenso è facoltativo. Senza di esso non carichiamo il tag Analytics. Puoi revocarlo in Privacy e sicurezza; la revoca blocca la raccolta successiva.</p>
+   <p data-analytics-t="detailGoogle">Google può trattare dati anche fuori dallo Spazio economico europeo. Per i dettagli sul trattamento consulta l'informativa di Google e la nostra informativa privacy.</p>
+   <p><a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" data-analytics-t="googlePrivacy">Informativa privacy di Google</a></p>
+   <button type="button" id="analyticsDetailsBack" class="btn secondary" data-analytics-t="detailBack">← Torna alla scelta</button>
+  </section>
  </div>
 </dialog>
 </body>
