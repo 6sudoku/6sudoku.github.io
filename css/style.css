@@ -306,3 +306,20 @@
 .analytics-privacy-section .btn{width:100%;font-size:.87rem}
 .analytics-privacy-more{margin:10px 0 0!important}
 @media (max-width:350px){.analytics-consent-actions{grid-template-columns:1fr}}
+
+/* Privacy compact banner v0.12.9.5.21 — mobile first */
+.analytics-consent-dialog{max-width:min(440px,calc(100vw - 22px));max-height:min(92dvh,800px);overflow-y:auto}
+.analytics-consent-body{padding:clamp(16px,4vw,24px)}
+.analytics-consent-body h2{font-size:clamp(1.35rem,5vw,1.7rem)}
+.analytics-consent-compact{display:flex;gap:12px;align-items:center;text-align:left}
+.analytics-consent-character{width:clamp(80px,25vw,116px);height:auto;object-fit:contain;flex:none;align-self:end}
+.analytics-consent-compact p{font-size:clamp(.86rem,3.5vw,.96rem);margin:6px 0;line-height:1.5}
+.analytics-consent-actions{margin:16px 0 4px}
+.analytics-consent-actions .btn{min-height:48px}
+.analytics-consent-links{display:flex;justify-content:center;flex-wrap:wrap;gap:8px 20px;margin-top:12px}
+.analytics-consent-links button{font-size:.85rem;text-decoration:underline;min-height:42px;padding:5px 3px}
+.analytics-consent-info{text-align:left;max-height:75dvh;overflow-y:auto}
+.analytics-consent-info p{font-size:.87rem;margin:11px 0}
+.analytics-consent-info .btn{width:100%;margin-top:14px}
+[hidden]{display:none!important}
+@media(max-width:355px){.analytics-consent-compact{gap:8px}.analytics-consent-character{width:75px}.analytics-consent-actions{grid-template-columns:1fr 1fr}}
