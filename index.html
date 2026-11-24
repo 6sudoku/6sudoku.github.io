@@ -114,7 +114,7 @@
 </section>
 <section class="screen" id="statsScreen"><div class="screenbar"><button class="back" data-back="home">← <span data-t="home">Home</span></button></div><h2 class="screen-title" data-t="stats">Le mie statistiche</h2><p class="screen-desc" data-t="statsIntro">I tuoi progressi rimangono sul dispositivo.</p><div class="stat-grid"><div><strong id="statWins">0</strong><small data-t="completed">Schemi completati</small></div><div><strong id="statToday">0</strong><small data-t="today">Completati oggi</small></div><div><strong id="statBest">—</strong><small data-t="best">Tempo migliore</small></div><div><strong id="statDaily">0</strong><small data-t="dailyDone">Sfide quotidiane</small></div></div><p class="small-muted" data-t="statsNote">I dati non si sincronizzano fra dispositivi.</p></section>
 </main>
-<footer><div>6 SUDOKU <strong>v0.12.9.5.20</strong> · <span data-t="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></div><div><span data-t="author">Ideato e sviluppato da</span> <a href="mailto:ondefx@gmail.com?subject=Info%20per%206sudoku">Alessandro</a></div></footer>
+<footer><div>6 SUDOKU <strong>v0.12.9.5.22</strong> · <span data-t="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></div><div><span data-t="author">Ideato e sviluppato da</span> <a href="mailto:ondefx@gmail.com?subject=Info%20per%206sudoku">Alessandro</a></div></footer>
 </div>
 
 <dialog id="vs1InviteDialog" class="modal"><div class="modal-body win-modal">
@@ -273,6 +273,11 @@
 <div class="modal-emblem">🔒</div><h2 data-t="privacyTitle">Privacy e sicurezza</h2>
 <p class="modal-intro" data-t="privacyIntro">Ecco come funziona 6 Sudoku. L'informativa legale definitiva è ancora in preparazione.</p>
 <div class="privacy-items">
+<section class="privacy-controller" aria-labelledby="privacyControllerHeading">
+<h3 id="privacyControllerHeading" data-analytics-t="controllerTitle">👤 Chi gestisce i dati</h3>
+<p data-analytics-t="controllerBody">Il titolare del trattamento di 6 Sudoku è Alessandro Ronci, persona fisica. Per informazioni, richieste di accesso, rettifica o cancellazione dei dati scrivi a 6sudoku@gmail.com.</p>
+</section>
+
 <section><h3 data-t="privacyLocalTitle">🧩 Partite libere</h3><p data-t="privacyLocalBody">Puoi giocare senza creare un profilo. Le statistiche delle partite libere restano su questo dispositivo.</p></section>
 <section><h3 data-t="privacyOnlineTitle">🏆 Classifica mondiale</h3><p data-t="privacyOnlineBody">Se partecipi online, salviamo nickname, Paese se scelto e risultati. Gli altri giocatori vedono nickname, Paese e tempi.</p></section>
 <section><h3 data-t="privacyEmailTitle">📧 Email facoltativa</h3><p data-t="privacyEmailBody">Serve solo a recuperare il profilo e usarlo su un altro dispositivo. Non la mostriamo nella classifica e non la usiamo per pubblicità.</p></section>
@@ -315,8 +320,8 @@
    <div class="analytics-consent-symbol" aria-hidden="true">🧩</div>
    <h2 id="analyticsConsentTitle" data-analytics-t="bannerTitle">La tua privacy conta</h2>
    <div class="analytics-consent-compact">
+    <p id="analyticsConsentDescription" data-analytics-t="bannerBody">6 Sudoku è gratis e vogliamo che continui a esserlo! Con il tuo consenso, Google Analytics ci aiuta a capire come viene utilizzato il gioco e a migliorarlo. Puoi accettare o rifiutare liberamente: il gioco resta gratuito in entrambi i casi.</p>
     <img class="analytics-consent-character" src="./assets/privacy-ragazza.webp" alt="" aria-hidden="true" width="116" height="116" loading="eager">
-    <p id="analyticsConsentDescription" data-analytics-t="bannerBody">Usiamo strumenti necessari al gioco. Solo con il tuo consenso, Google Analytics 4 ci aiuta a capire come viene utilizzato 6 Sudoku. Puoi giocare anche se rifiuti.</p>
    </div>
    <div class="analytics-consent-actions">
     <button type="button" id="analyticsDecline" class="btn secondary" data-analytics-t="decline">Rifiuta</button>
