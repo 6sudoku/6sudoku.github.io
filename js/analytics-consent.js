@@ -8,9 +8,9 @@
  const getChoice=()=>{try{const value=JSON.parse(localStorage.getItem(KEY));return value?.choice==='accepted'||value?.choice==='declined'?value.choice:null}catch(_){return null}};
  let choice=getChoice(),loaded=false,opening=false;
  const getLang=()=>window.I18N?.[$('language')?.value]||window.I18N?.it||{};
- const t=key=>getLang()['analytics_'+key]||getLang().analytics_bannerTitle||key;
+ const t=key=>getLang()[key]||window.I18N?.it?.[key]||key;
  const labels={bannerTitle:'bannerTitle',bannerBody:'bannerBody',bannerDetails:'bannerDetails',decline:'decline',accept:'accept',readPrivacy:'readPrivacy',settingsHeading:'settingsHeading',settingsBody:'settingsBody',currentLabel:'currentLabel',changeChoice:'changeChoice',googlePrivacy:'googlePrivacy'};
- function refresh(){for(const el of document.querySelectorAll('[data-analytics-t]')){const key=el.dataset.analyticsT;const val=getLang()['analytics_'+key];if(val)el.textContent=val}const status=$('analyticsConsentStatus');if(status){const k=choice==='accepted'?'statusAccepted':choice==='declined'?'statusDeclined':'statusUnknown';status.textContent=getLang()['analytics_'+k]||k;}}
+ function refresh(){for(const el of document.querySelectorAll('[data-analytics-t]')){const key=el.dataset.analyticsT;const val=t(key);if(val&&val!==key)el.textContent=val}const status=$('analyticsConsentStatus');if(status){const k=choice==='accepted'?'statusAccepted':choice==='declined'?'statusDeclined':'statusUnknown';status.textContent=t(k);}}
  function setupDataLayer(){window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){window.dataLayer.push(arguments)}}
  function loadGA(){if(loaded||choice!=='accepted')return;loaded=true;
   setupDataLayer();
@@ -36,7 +36,8 @@
     location.reload();return;
    }}
  }
- function open(){refresh();const dialog=$('analyticsConsentDialog');if(dialog&&!dialog.open){try{dialog.showModal()}catch(_){dialog.setAttribute('open','')}}}
+ function showMain(){const main=$('analyticsConsentMain'),details=$('analyticsConsentDetails');if(main)main.hidden=false;if(details)details.hidden=true;}
+ function open(){showMain();refresh();const dialog=$('analyticsConsentDialog');if(dialog&&!dialog.open){try{dialog.showModal()}catch(_){dialog.setAttribute('open','')}}}
  function dedupe(event,localKey){if(!SAFE_EVENTS.has(event)||choice!=='accepted'||!loaded)return false;
   // Remember completion/start markers only in this tab, never transmit identifiers.
   if(localKey){const key='6sudoku-ga4-event-'+event+'-'+String(localKey);try{if(sessionStorage.getItem(key))return false;sessionStorage.setItem(key,'1')}catch(_){}}
@@ -53,7 +54,9 @@
  window.SudokuAnalytics={emit,refresh,hasConsent:()=>choice==='accepted'};
  function init(){refresh();$('analyticsAccept')?.addEventListener('click',()=>choose('accepted'));$('analyticsDecline')?.addEventListener('click',()=>choose('declined'));
   $('analyticsConsentOpen')?.addEventListener('click',()=>{const privacy=$('privacyDialog');if(privacy?.open)privacy.close();open()});
-  $('analyticsReadPrivacy')?.addEventListener('click',()=>{const consent=$('analyticsConsentDialog');if(consent?.open)consent.close();$('privacyDialog')?.showModal();});
+  $('analyticsReadDetails')?.addEventListener('click',()=>{const main=$('analyticsConsentMain'),details=$('analyticsConsentDetails');if(main)main.hidden=true;if(details)details.hidden=false;});
+  $('analyticsDetailsBack')?.addEventListener('click',showMain);
+  $('analyticsReadPrivacy')?.addEventListener('click',()=>{const consent=$('analyticsConsentDialog');if(consent?.open)consent.close();const privacy=$('privacyDialog');if(privacy){privacy.addEventListener('close',()=>{if(choice===null)open()},{once:true});privacy.showModal();}});
   $('language')?.addEventListener('change',()=>queueMicrotask(refresh));
   window.addEventListener('storage',event=>{if(event.key!==KEY)return;const incoming=getChoice();if(incoming===choice)return;const before=choice;choice=incoming;refresh();if(before==='accepted'&&incoming!=='accepted'){clearAnalyticsCookies();location.reload()}else if(incoming==='accepted')loadGA();else if(incoming===null)open()});
   // GA4 never loads when consent is rejected/unset, not even on page refresh.
