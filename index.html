@@ -113,7 +113,7 @@
 </section>
 <section class="screen" id="statsScreen"><div class="screenbar"><button class="back" data-back="home">← <span data-t="home">Home</span></button></div><h2 class="screen-title" data-t="stats">Le mie statistiche</h2><p class="screen-desc" data-t="statsIntro">I tuoi progressi rimangono sul dispositivo.</p><div class="stat-grid"><div><strong id="statWins">0</strong><small data-t="completed">Schemi completati</small></div><div><strong id="statToday">0</strong><small data-t="today">Completati oggi</small></div><div><strong id="statBest">—</strong><small data-t="best">Tempo migliore</small></div><div><strong id="statDaily">0</strong><small data-t="dailyDone">Sfide quotidiane</small></div></div><p class="small-muted" data-t="statsNote">I dati non si sincronizzano fra dispositivi.</p></section>
 </main>
-<footer><div>6 SUDOKU <strong>v0.12.9.5.17</strong> · <span data-t="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></div><div><span data-t="author">Ideato e sviluppato da</span> <a href="mailto:ondefx@gmail.com?subject=Info%20per%206sudoku">Alessandro</a></div></footer>
+<footer><div>6 SUDOKU <strong>v0.12.9.5.18</strong> · <span data-t="footer">UN PICCOLO GRANDE GIOCO DI LOGICA</span></div><div><span data-t="author">Ideato e sviluppato da</span> <a href="mailto:ondefx@gmail.com?subject=Info%20per%206sudoku">Alessandro</a></div></footer>
 </div>
 
 <dialog id="vs1InviteDialog" class="modal"><div class="modal-body win-modal">
@@ -205,7 +205,25 @@
  </div></dialog>
 <dialog id="updateDialog" class="modal"><div class="modal-body"><div class="modal-emblem" aria-hidden="true">↻</div><h2 data-t="updateTitle">Aggiornamento disponibile</h2><p id="updateDescription" class="modal-intro"></p><div class="update-actions"><button type="button" id="updateLater" class="btn secondary" data-t="updateLater">Più tardi</button><button type="button" id="updateNow" class="btn primary" data-t="updateNow">Aggiorna ora</button></div></div></dialog>
 <dialog id="rulesDialog" class="modal"><div class="modal-body"><button class="close" data-close="rulesDialog" aria-label="Chiudi">×</button><h2 data-t="rulesTitle">Come si gioca?</h2><div id="rulesContent"></div><button class="btn primary" data-close="rulesDialog" data-t="understood">Ho capito</button></div></dialog>
-<dialog id="installDialog" class="modal"><div class="modal-body"><button class="close" data-close="installDialog" aria-label="Chiudi">×</button><div class="modal-emblem">📲</div><h2 data-t="installTitle">Installa 6 Sudoku</h2><p class="modal-intro" data-t="dailyRequiresApp">La Sfida quotidiana è disponibile aprendo l'app installata.</p><div id="installSteps"><div class="illustration" id="stepIllustration"></div><div class="steps-count" id="stepCount"></div><h3 id="stepTitle"></h3><p id="stepBody"></p><div class="steps-controls"><button id="stepPrev" class="btn secondary" data-t="prev">Indietro</button><button id="stepNext" class="btn primary" data-t="next">Avanti</button></div></div><div id="androidInstall" class="hidden"><p data-t="androidHelp">Utilizza il menu del browser e scegli Installa app o Aggiungi alla schermata Home.</p><button class="btn primary" id="installConfirm" data-t="installButton">Installa</button></div></div></dialog>
+<dialog id="installDialog" class="modal install-modal"><div class="modal-body install-modal-body">
+<button type="button" class="close" data-close="installDialog" aria-label="Chiudi">×</button>
+<section id="installSteps" class="install-ios-content">
+<img class="install-iphone-hero" src="./assets/install-iphone-hero.webp" alt="" width="578" height="210">
+<h2 id="installGuideHeading" data-t="installGuideHeading">Installa 6 Sudoku su iPhone</h2>
+<p id="installGuideIntro" class="install-guide-intro" data-t="installGuideIntro">Segui questi semplici passaggi per aggiungere 6 Sudoku alla schermata Home.</p>
+<div class="install-guide-list">
+<article class="install-guide-item"><b class="install-guide-num">1</b><span class="install-guide-icon">🧭</span><div><h3 id="iosInstallTitle1"></h3><p id="iosInstallBody1"></p></div></article>
+<article class="install-guide-item"><b class="install-guide-num">2</b><span class="install-guide-icon install-icon-blue">⇧</span><div><h3 id="iosInstallTitle2"></h3><p id="iosInstallBody2"></p></div></article>
+<article class="install-guide-item"><b class="install-guide-num">3</b><span class="install-guide-icon install-icon-blue">＋</span><div><h3 id="iosInstallTitle3"></h3><p id="iosInstallBody3"></p></div></article>
+<article class="install-guide-item"><b class="install-guide-num">4</b><span class="install-guide-icon">✅</span><div><h3 id="iosInstallTitle4"></h3><p id="iosInstallBody4"></p></div></article>
+<article class="install-guide-item"><b class="install-guide-num">5</b><img src="./assets/icon-192.png" class="install-guide-icon install-guide-app" alt="" width="51" height="51"><div><h3 id="iosInstallTitle5"></h3><p id="iosInstallBody5"></p></div></article>
+<article class="install-guide-item"><b class="install-guide-num">6</b><span class="install-guide-icon">✅</span><div><h3 id="iosInstallTitle6"></h3><p id="iosInstallBody6"></p></div></article>
+</div>
+<button class="btn primary install-guide-done" id="installGuideDone" type="button" data-t="understood">Ho capito</button>
+</section>
+<section id="androidInstall" class="hidden install-browser-fallback"><div class="modal-emblem">📲</div><h2 data-t="installTitle">Installa 6 Sudoku</h2><p data-t="androidHelp">Utilizza il menu del browser e scegli Installa app o Aggiungi alla schermata Home.</p><button class="btn primary" id="installConfirm" data-t="installButton">Installa</button><button class="btn secondary" id="installBrowserGuide" type="button" data-t="installOpenIphoneGuide">Guida iPhone / iPad</button></section>
+<section id="installChoice" class="hidden install-browser-fallback"><div class="modal-emblem">📲</div><h2 data-t="installTitle">Installa 6 Sudoku</h2><p data-t="installChooseDevice">Scegli la guida per il tuo dispositivo.</p><button class="btn primary" id="installChoiceIOS" type="button" data-t="installOpenIphoneGuide">Guida iPhone / iPad</button><button class="btn secondary" id="installChoiceOther" type="button" data-t="installOtherDevice">Android / Windows</button></section>
+</div></dialog>
 <dialog id="profileDialog" class="modal"><div class="modal-body"><button class="close" data-close="profileDialog" aria-label="Chiudi">×</button><div class="modal-emblem">👤</div><h2 data-t="profileTitle">Il tuo nome di gioco</h2><p class="modal-intro" data-t="profileInfo">Scegli un nickname per la Sfida quotidiana. Il Paese è facoltativo.</p><form id="profileForm"><label for="nickname" data-t="nickname">Nickname</label><input id="nickname" maxlength="20" minlength="2" autocomplete="nickname" required placeholder="Nickname"><label for="country" data-t="country">Paese (facoltativo)</label><select id="country"></select><div class="profile-preview"><span data-t="preview">Anteprima</span><strong id="namePreview">—</strong></div>
 <div class="profile-section">
   <div class="profile-section-title" data-t="profileNotifs">3. Notifiche</div>
