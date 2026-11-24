@@ -2,7 +2,7 @@
 (() => {
 'use strict';
 const $=id=>document.getElementById(id), E=window.SudokuEngine;
-const APP_VERSION='0.12.9.5.19', VERSION_URL='./version.json';
+const APP_VERSION='0.12.9.5.20', VERSION_URL='./version.json';
 const STORE='6sudoku-prod-v012-state', LANGKEY='6sudoku-prod-lang', PROFILEKEY='6sudoku-prod-profile';
 const LEVELS=['beginner','intermediate','advanced','hero'];
 const LEVEL_LABELS={beginner:'🌱 ZEN',intermediate:'⚡ FOCUS',advanced:'💪 MASTER',hero:'👑 HERO'};
@@ -185,7 +185,7 @@ async function confirmDaily(){
   if(!/^[0-6]{36}$/.test(started.puzzle))throw Error('Invalid puzzle response');
   const nums=Array.from(started.puzzle,Number);
   const g={mode:'daily',seed:'online-'+started.day,level,puzzle:nums,solution:null,values:[...nums],notes:Array.from({length:36},()=>[]),elapsed:0,hints:0,day:started.day,target:null,finished:false,dailyOnline:true};
-  state.attempts[key]={startedAt:started.started_at,online:true};current=g;state.active=g;saveState();closeDialog('dailyConfirmDialog');enterGame();
+  state.attempts[key]={startedAt:started.started_at,online:true};current=g;state.active=g;saveState();closeDialog('dailyConfirmDialog');enterGame();window.SudokuAnalytics?.emit('daily_challenge_start',{game_mode:'daily',difficulty:g.level},g.day+'|'+g.level);
  }catch(err){console.error('Daily challenge start error',err);alert(rankText(5)+'\n'+(err?.message||''))}
  finally{remoteDailyBusy=false;$('dailyConfirmStart').disabled=false}
 }
@@ -199,7 +199,7 @@ function gameTitle(){return ['vs1_creator','vs1_opponent'].includes(current.mode
 function start(mode){if(mode==='daily'){askDaily();return}
  if(mode==='challenge'){if(!deepLink||deepLink.invalid){alert(tr('invalidLink'));return}current=buildGame('challenge',deepLink.level,deepLink.seed,deepLink.target)}
  else{current=buildGame('free',level,newSeed())}
- state.active=current;saveState();enterGame()}
+ state.active=current;saveState();enterGame();if(mode==='free')window.SudokuAnalytics?.emit('game_start',{game_mode:'free',difficulty:current.level},current.seed)}
 function enterGame(){selected=-1;noteMode=false;lastTick=Date.now();$('gameTitle').textContent=gameTitle();$('vs1GameDifficulty').classList.toggle('hidden',!['vs1_creator','vs1_opponent'].includes(current.mode));if(['vs1_creator','vs1_opponent'].includes(current.mode))$('vs1GameDifficulty').textContent=levelLabel(current.level);$('timer').textContent=format(current.elapsed);$('challengeBox').classList.toggle('hidden',current.target===null||current.target===undefined);$('beatTime').textContent=current.target===null?'':format(current.target);$('hintBtn').hidden=current.mode==='daily'||['vs1_creator','vs1_opponent'].includes(current.mode);$('feedback').textContent='';applyTexts();drawBoard();show('game');startTimer()}
 function startTimer(){clearInterval(timer);lastTick=Date.now();timer=setInterval(()=>{if(!current||current.finished||$('game').classList.contains('active')===false)return;if(document.visibilityState==='hidden'){lastTick=Date.now();return}const now=Date.now();const seconds=Math.floor((now-lastTick)/1000);if(seconds>0){current.elapsed+=seconds;lastTick+=seconds*1000;$('timer').textContent=format(current.elapsed);if(seconds||current.elapsed%5===0)saveState()}},250)}
 function pauseTimer(){clearInterval(timer);if(current&&!current.finished&&$('game').classList.contains('active')){let now=Date.now(),delta=document.visibilityState==='visible'?Math.floor((now-lastTick)/1000):0;if(delta>0)current.elapsed+=delta;saveState()}}
@@ -286,6 +286,7 @@ async function finishVs1(){
   vs1RemoteState=null;vs1LastCheck=0;
   save('6sudoku-prod-vs1-last-created',{challenge_id:response.challenge_id,token:response.invite_token,expires_at:response.expires_at,stake_kind:opts.stake_kind,stake_text:opts.stake_text,difficulty:current.level,creator_elapsed_ms:response.creator_elapsed_ms});
   state.active=null;save(STORE,state);
+  window.SudokuAnalytics?.emit('challenge_complete',{game_mode:'vs1_creator',difficulty:current.level,duration_seconds:current.elapsed},current.vs1SessionId);
   $('vs1CreatedTime').textContent=format(current.elapsed);
   $('vs1CreatedDifficulty').textContent=levelLabel(current.level);
   $('feedback').textContent='';
@@ -451,7 +452,7 @@ function vs1Message(){
 async function shareVs1(){
  updateVs1Share();const text=vs1Message();if(!text||!vs1Stored()||new Date(vs1Stored().expires_at).getTime()<=Date.now())return;
  const link=vs1Link(read('6sudoku-prod-vs1-last-created',null));
- if(navigator.share){try{await navigator.share({text:text.replace(link,'').trim(), url:link});return}catch(err){if(err.name==='AbortError')return}}
+ if(navigator.share){try{await navigator.share({text:text.replace(link,'').trim(), url:link});window.SudokuAnalytics?.emit('challenge_invite_sent',{game_mode:'vs1_creator',difficulty:vs1Stored()?.difficulty},vs1Stored()?.challenge_id);return}catch(err){if(err.name==='AbortError')return}}
  try{await navigator.clipboard.writeText(text);$('vs1ShareStatus').textContent=tr('vs1Copied')}
  catch(_){$('vs1ShareStatus').textContent=tr('vs1CopyManual')}
 }
@@ -494,6 +495,7 @@ async function finishVs1Opponent(){
   const result=await vs1OpponentApi({action:'finish',challenge_id:current.vs1ChallengeId,invite_token:current.vs1InviteToken,values:current.values.join('')});
   if(!result.ok||result.status!=='completed')throw Error(tr('vs1Error'));
   current.finished=true;state.active=null;save(STORE,state);
+  window.SudokuAnalytics?.emit('challenge_complete',{game_mode:'vs1_opponent',difficulty:current.level,duration_seconds:Math.ceil(Number(result.opponent_elapsed_ms)/1000)},current.vs1ChallengeId);
   $('vs1ResultWinner').textContent=tr(result.winner==='opponent'?'vs1Won':result.winner==='creator'?'vs1Lost':'vs1Tie');
   $('vs1ResultOpponentTime').textContent=format(Math.ceil(result.opponent_elapsed_ms/1000));
   $('vs1ResultCreatorTime').textContent=format(Math.ceil(result.creator_elapsed_ms/1000));
@@ -525,7 +527,7 @@ async function win(){
   }
   remoteDailyBusy=false;
  }
- clearInterval(timer);current.finished=true;let result={day:date(),mode:current.mode,level:current.level,score:current.elapsed,hints:current.hints,seed:current.seed};state.stats.push(result);state.stats=state.stats.slice(-500);if(current.mode==='daily'){const key=current.day+'|'+current.level;if(!state.daily[key])state.daily[key]=result;if(!state.attempts[key])state.attempts[key]={startedAt:new Date().toISOString()}}state.active=null;save(STORE,state);$('winTime').textContent=format(current.elapsed);$('winDetails').textContent=current.mode==='daily'?ui('winDaily',{level:levelLabel(current.level)}):tr('finishedDetail',{level:tr(current.level),hints:current.hints});$('winRanking').classList.toggle('hidden',current.mode!=='daily');$('winNew').classList.toggle('hidden',current.mode==='daily');$('winShare').textContent=current.mode==='daily'?ui('launch'):tr('challengeFriend');let comparison='';if(current.target!==null){comparison=current.elapsed<current.target?tr('winBeat'):current.elapsed>current.target?tr('winLost'):tr('winTie')}$('winCompare').textContent=comparison;openDialog('winDialog')}
+ clearInterval(timer);current.finished=true;let result={day:date(),mode:current.mode,level:current.level,score:current.elapsed,hints:current.hints,seed:current.seed};state.stats.push(result);state.stats=state.stats.slice(-500);if(current.mode==='daily'){const key=current.day+'|'+current.level;if(!state.daily[key])state.daily[key]=result;if(!state.attempts[key])state.attempts[key]={startedAt:new Date().toISOString()}}state.active=null;save(STORE,state);if(result.mode==='free'||result.mode==='daily')window.SudokuAnalytics?.emit(result.mode==='daily'?'daily_challenge_complete':'game_complete',{game_mode:result.mode,difficulty:result.level,duration_seconds:result.score},result.mode+'|'+result.seed+'|'+result.level);$('winTime').textContent=format(current.elapsed);$('winDetails').textContent=current.mode==='daily'?ui('winDaily',{level:levelLabel(current.level)}):tr('finishedDetail',{level:tr(current.level),hints:current.hints});$('winRanking').classList.toggle('hidden',current.mode!=='daily');$('winNew').classList.toggle('hidden',current.mode==='daily');$('winShare').textContent=current.mode==='daily'?ui('launch'):tr('challengeFriend');let comparison='';if(current.target!==null){comparison=current.elapsed<current.target?tr('winBeat'):current.elapsed>current.target?tr('winLost'):tr('winTie')}$('winCompare').textContent=comparison;openDialog('winDialog')}
 function goHome(){pauseTimer();show('home')}
 function drawStats(){let all=state.stats||[],today=all.filter(s=>s.day===date()),best=all.length?Math.min(...all.map(s=>s.score)):null;$('statWins').textContent=all.length;$('statToday').textContent=today.length;$('statBest').textContent=best===null?'—':format(best);$('statDaily').textContent=all.filter(s=>s.mode==='daily').length}
 function showAlreadyDone(chosen,score){
