@@ -323,3 +323,21 @@
 .analytics-consent-info .btn{width:100%;margin-top:14px}
 [hidden]{display:none!important}
 @media(max-width:355px){.analytics-consent-compact{gap:8px}.analytics-consent-character{width:75px}.analytics-consent-actions{grid-template-columns:1fr 1fr}}
+
+/* 6 Sudoku 0.12.9.5.22 — banner consenso compatto approvato */
+.analytics-consent-dialog {width:min(440px,calc(100vw - 24px));max-height:min(92dvh,760px);overflow-y:auto}
+.analytics-consent-compact {display:flex;flex-direction:row;align-items:center;gap:12px;text-align:left}
+.analytics-consent-compact p {order:0;flex:1;min-width:0;margin:5px 0;font-size:clamp(.86rem,3.4vw,.98rem);line-height:1.46}
+.analytics-consent-character {order:1;display:block;flex:0 0 auto;width:clamp(78px,24vw,116px);max-width:36%;height:auto;align-self:center;object-fit:contain}
+.analytics-consent-links {display:flex;justify-content:center;align-items:center;gap:6px 16px;flex-wrap:wrap}
+.analytics-consent-links button {font-size:clamp(.78rem,3.1vw,.88rem)}
+.analytics-consent-actions {display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.analytics-consent-actions .btn {min-width:0;min-height:48px}
+.privacy-controller {background:#f0f8ef;border:1px solid #cfe4ce;border-radius:12px;padding:10px;margin-bottom:12px}
+.privacy-controller h3 {margin:0 0 6px}
+@media (max-width:355px) {
+ .analytics-consent-character {width:72px}
+ .analytics-consent-compact {gap:8px}
+ .analytics-consent-actions {grid-template-columns:1fr 1fr}
+ .analytics-consent-actions .btn {padding-inline:5px;font-size:.81rem}
+}
