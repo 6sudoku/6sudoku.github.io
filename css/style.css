@@ -288,3 +288,21 @@
 /* v0.12.9.5.19 — soli testimonial nella finestra Complimenti */
 .win-modal .win-testimonials{display:block;width:min(100%,240px);height:auto;margin:8px auto 10px;object-fit:contain}
 @media(max-width:360px){.win-modal .win-testimonials{width:min(100%,210px)}}
+
+/* GA4 0.12.9.5.20 — scelta Analytics simmetrica e mobile-first. */
+.analytics-consent-dialog{max-width:min(480px,calc(100vw - 24px));width:100%;border:0;border-radius:22px;padding:0;box-shadow:0 18px 55px #09231644}
+.analytics-consent-dialog::backdrop{background:rgba(10,38,22,.64)}
+.analytics-consent-body{padding:clamp(18px,5vw,30px);text-align:center}
+.analytics-consent-symbol{font-size:2rem;margin-bottom:8px}
+.analytics-consent-body h2{margin:4px 0 12px;color:#173923}
+.analytics-consent-body p{line-height:1.55;color:#47604e;font-size:.94rem}
+.analytics-consent-details{font-size:.81rem!important;color:#526b59!important;margin:12px 0 16px}
+.analytics-consent-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0 8px}
+.analytics-consent-actions .btn{min-width:0;width:100%;white-space:normal;min-height:52px;line-height:1.3;font-size:.89rem}
+.analytics-privacy-action{padding:10px;color:#285c34;text-decoration:underline;text-underline-offset:2px}
+.analytics-privacy-section{padding:12px;background:#f0f8ef;border:1px solid #cfe4ce;border-radius:14px;margin:12px 0;text-align:left}
+.analytics-privacy-section h3{margin:0 0 7px;font-size:.98rem}
+.analytics-privacy-section p{font-size:.85rem;line-height:1.5;margin:0 0 10px}
+.analytics-privacy-section .btn{width:100%;font-size:.87rem}
+.analytics-privacy-more{margin:10px 0 0!important}
+@media (max-width:350px){.analytics-consent-actions{grid-template-columns:1fr}}
